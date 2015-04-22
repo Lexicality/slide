@@ -1,0 +1,19 @@
+"slide"
+{
+	"base"         "base"
+	"title"        "Slide"
+	"version"      "0.0.1"
+
+	"maps"         "^slide_|^sliderace_"
+
+	"menusystem"   "1"
+
+	"author_name"  "Lexi"
+	"author_email" "lexi@lexi.org.uk"
+	"author_url"   "http://lexi.org.uk"
+
+	"settings"
+	{
+		// TODO
+	}
+}
