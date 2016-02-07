@@ -1,8 +1,8 @@
 
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
-include( "shared.lua" )
+include("shared.lua")
 
 
 function GM:InitPostEntity()
@@ -11,7 +11,7 @@ function GM:InitPostEntity()
 end
 
 function GM:PlayerSpawn(ply)
-	player_manager.SetPlayerClass( ply, "class_default" )
+	player_manager.SetPlayerClass(ply, "class_default")
 	self.BaseClass.PlayerSpawn(self, ply)
 	print("Hi!", ply)
 end
