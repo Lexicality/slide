@@ -4,6 +4,8 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
+include("meta_ply.lua");
+
 
 function GM:InitPostEntity()
 	game.ConsoleCommand("sv_accelerate 100\n");
@@ -17,4 +19,10 @@ function GM:PlayerSpawn(ply)
 	-- ply:SetTeam(TEAM_RED);
 	ply:SetTeam(TEAM_BLUE);
 	print("Hi!", ply)
+end
+
+function GM:DoPlayerDeath(ply, ...)
+	self.BaseClass.DoPlayerDeath(self, ply, ...);
+
+	ply:GetTombstone():HandlePlayerDeath();
 end
