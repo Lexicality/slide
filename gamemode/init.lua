@@ -13,5 +13,8 @@ end
 function GM:PlayerSpawn(ply)
 	player_manager.SetPlayerClass(ply, "class_default")
 	self.BaseClass.PlayerSpawn(self, ply)
+
+	-- ply:SetTeam(TEAM_RED);
+	ply:SetTeam(TEAM_BLUE);
 	print("Hi!", ply)
 end
