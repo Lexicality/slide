@@ -74,9 +74,24 @@ function ENT:Draw()
 	self:DrawModel();
 end
 
-local behindGlow = Material("sprites/orangecore1");
--- local beam = Material("sprites/laserbeam");
-local beam = Material("sprites/physgbeamb");
+function getSaneMaterial(str)
+	local mat = Material(str);
+	if mat:IsError() then
+		return mat;
+	end
+
+	-- Fun with rendermodes ¬_¬
+	if mat:GetInt("$spriterendermode") ~= 5 then
+		mat:SetInt("$spriterendermode", 5);
+		mat:Recompute();
+	end
+	return mat
+end
+
+local behindGlow = getSaneMaterial("sprites/flare1");
+-- local behindGlow = getSaneMaterial("sprites/orangecore1");
+local beam = getSaneMaterial("sprites/laserbeam");
+-- local beam = getSaneMaterial("sprites/physgbeamb");
 local color_orange = Color(255, 0, 200);
 function ENT:DrawTranslucent()
 	if not self:ShouldDraw() then
@@ -93,37 +108,64 @@ function ENT:DrawTranslucent()
 
 	local here = self:GetPos();
 	local tr = util.QuickTrace(here, vector_up * 20000, self);
+	local norm = here - EyePos();
+	norm:Normalize()
 
 	local obbs = self:OBBMaxs();
 	local size = obbs:Length() * 10;
 
 	local top = tr.HitPos
 	local dist = top - here;
-	local dist1 = dist / 10;
 
-	local n = ((CurTime() * 5) % 100) / 100
+	local ct = CurTime()
+
+	local n = ((ct * 10) % 100) / 100
 	-- local
 
-	local beamsize = size - 20;
+	local beamsize = size / 2;
+	local target = size / 10;
+	local steps = 10;
+	local sizeStep = (beamsize - target) / steps
+	local distStep = dist / steps;
 
 	render.SetMaterial(beam);
 	-- render.OverrideColorWriteEnable(true, true)
 	-- render.SetColorModulation(1, 0, 1);
 	render.SetBlend(0.2)
-	render.StartBeam(11);
+	render.StartBeam(steps + 1);
 	render.AddBeam(here, beamsize, n);
-	for i = 1, 10 do
-		render.AddBeam(here + dist1 * i, beamsize - i * 3, n - i / 4);
+	for i = 1, steps do
+		render.AddBeam(here + distStep * i, beamsize - i * sizeStep, n - i / 4);
 	end
 	-- render.AddBeam(here + (top - here) / 2, 50, 1)
 	-- render.AddBeam(top, 10, 0);
 	render.EndBeam()
 	render.SetBlend(1)
-	-- render.SetColorModulation(1, 1, 1);
+	render.SetColorModulation(1, 1, 1);
 
+	local spin = (ct * 5) % 360
 
 	render.SetMaterial(behindGlow)
-	render.DrawSprite(self:GetPos(), size, size);
+	render.DrawQuadEasy(
+		here,
+		norm,
+		size + (math.random() * 2 - 1),
+		size + (math.random() * 2 - 1),
+		color_white,
+		spin
+		-- math.random(360)
+	);
+	size = size * 0.7;
+	render.DrawQuadEasy(
+		here,
+		norm,
+		size + (math.random() * 2 - 1),
+		size + (math.random() * 2 - 1),
+		color_white,
+		360 - spin
+		-- math.random(360)
+	);
+	-- render.DrawSprite(self:GetPos(), size, size);
 
 	-- TODO: Sparkles n shit
 end
