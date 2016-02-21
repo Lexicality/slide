@@ -8,6 +8,8 @@ ENT.Purpose     = "Celebrating and marking a player's clumsy death";
 ENT.Author      = "Lexi"
 ENT.RenderGroup = RENDERGROUP_BOTH
 
+ENT.SpriteSize = 70;
+
 DEFINE_BASECLASS "base_entity";
 
 print "Holla holla tombstone!";
@@ -48,6 +50,94 @@ end
 -- 	return TRANSMIT_ALWAYS;
 -- end
 
+--[[
+  _                     _                _
+ | |                   | |              | |
+ | |__   ___ _ __ ___  | |__   ___    __| |_ __ __ _  __ _  ___  _ __  ___
+ | '_ \ / _ \ '__/ _ \ | '_ \ / _ \  / _` | '__/ _` |/ _` |/ _ \| '_ \/ __|
+ | | | |  __/ | |  __/ | |_) |  __/ | (_| | | | (_| | (_| | (_) | | | \__ \
+ |_| |_|\___|_|  \___| |_.__/ \___|  \__,_|_|  \__,_|\__, |\___/|_| |_|___/
+                                                      __/ |
+                                                     |___/
+--]]
+
+if SERVER then
+	return
+end
+
+
+local i = 0;
+function aa(wut)
+	DebugInfo(i, tostring(wut))
+	i = i + 1
+end
+
+ENT.NextParticle = 0;
+ENT.ParticleDelay = 0.1;
+function ENT:HandleParticles()
+	local testParticleMaterial = getSaneMaterial("sprites/yelflare1");
+	local ct = CurTime();
+	if ct < self.NextParticle then
+		return;
+	end
+	self.NextParticle = ct + self.ParticleDelay;
+
+	local p = self.PortalEmitter:Add(testParticleMaterial, self.BeamTop);
+	if not p then
+		return;
+	end
+	p:SetVelocity((self.PortalNormal + VectorRand()) * 10);
+	p:SetDieTime(3);
+	p:SetStartSize(3);
+	p:SetEndSize(0);
+	local ea = LocalPlayer():EyeAngles()
+	p:SetAngles(ea)
+	p:SetGravity(-vector_up * 5)
+end
+
+ENT.BeamTop = vector_origin;
+ENT.ExitPortal = false;
+ENT.PortalNormal = vector_up;
+ENT.PortalEmitter = nil;
+function ENT:Think()
+	-- Debugging
+	i = 0;
+	-- Particles
+	if self.PortalEmitter then
+		self:HandleParticles()
+	end
+	-- Top
+	local here = self:GetPos()
+	local tr = util.TraceLine({
+		start  = here;
+		endpos = here + vector_up * 20000;
+		mask   = MASK_SOLID_BRUSHONLY;
+	});
+	if tr.HitPos == self.BeamTop then
+		return
+	end
+	self.BeamTop = tr.HitPos;
+	if tr.Hit and not tr.HitSky then
+		self.ExitPortal = true;
+		self.PortalNormal = tr.HitNormal;
+		if self.PortalEmitter then
+			self.PortalEmitter:SetPos(self.BeamTop);
+		else
+			self.PortalEmitter = ParticleEmitter(self.BeamTop, true);
+		end
+	elseif self.ExitPortal then
+		self.ExitPortal = false;
+		if self.PortalEmitter then
+			self.PortalEmitter:Finish();
+			self.PortalEmitter = nil;
+		end
+	end
+	local ss = self.SpriteSize;
+	local mins = Vector(-ss, -ss, -ss);
+	local maxs = Vector(ss, ss, (self.BeamTop - here).z);
+	self:SetRenderBounds(mins, maxs);
+end
+
 function ENT:ShouldDraw()
 	if self.dt.GrizzlyWarning then
 
@@ -65,65 +155,66 @@ end
 
 function ENT:Draw()
 	if not self:ShouldDraw() then
-		-- debugoverlay.Cross(self:GetPos(), 10, 0.1, debugNo, true)
 		return;
 	end
-
-	debugoverlay.Cross(self:GetPos(), 1, 0.1, debugYes, true)
 
 	self:DrawModel();
 end
 
+local matCache = {};
 function getSaneMaterial(str)
-	local mat = Material(str);
+	local mat;
+	mat = matCache[str]
+	if mat then
+		return mat;
+	end
+	mat = Material(str);
+	matCache[str] = mat;
 	if mat:IsError() then
 		return mat;
 	end
 
 	-- Fun with rendermodes ¬_¬
-	if mat:GetInt("$spriterendermode") ~= 5 then
+	if mat:GetInt("$spriterendermode") == 0 then
 		mat:SetInt("$spriterendermode", 5);
-		mat:Recompute();
 	end
+	mat:Recompute();
 	return mat
 end
 
-local behindGlow = getSaneMaterial("sprites/flare1");
--- local behindGlow = getSaneMaterial("sprites/orangecore1");
-local beam = getSaneMaterial("sprites/laserbeam");
--- local beam = getSaneMaterial("sprites/physgbeamb");
 local color_orange = Color(255, 0, 200);
 function ENT:DrawTranslucent()
 	if not self:ShouldDraw() then
 		return;
 	end
+	-- These have to be cached here due to sprit bullshit
+	local behindGlow = getSaneMaterial("sprites/flare1");
+	local beam = getSaneMaterial("sprites/laserbeam");
+	local portal = getSaneMaterial("sprites/glow02");
 
-	local i = 0;
-	function aa(wut)
-		DebugInfo(i, tostring(wut))
-		i = i + 1
-	end
 
 	-- self.BaseClass.DrawTranslucent(self, true)
 
 	local here = self:GetPos();
-	local tr = util.QuickTrace(here, vector_up * 20000, self);
 	local norm = here - EyePos();
 	norm:Normalize()
 
-	local obbs = self:OBBMaxs();
-	local size = obbs:Length() * 10;
+	local size = self.SpriteSize;
 
-	local top = tr.HitPos
+	local top = self.BeamTop;
 	local dist = top - here;
 
 	local ct = CurTime()
 
 	local n = ((ct * 10) % 100) / 100
+
 	-- local
 
 	local beamsize = size / 2;
 	local target = size / 10;
+	if not self.ExitPortal then
+		target = 0;
+	end
 	local steps = 10;
 	local sizeStep = (beamsize - target) / steps
 	local distStep = dist / steps;
@@ -166,6 +257,18 @@ function ENT:DrawTranslucent()
 		-- math.random(360)
 	);
 	-- render.DrawSprite(self:GetPos(), size, size);
+
+	if (self.ExitPortal) then
+		-- render.SetMaterial(portal);
+		render.DrawQuadEasy(
+			self.BeamTop - vector_up,
+			self.PortalNormal,
+			target * 2.2,
+			target * 2.2,
+			color_white,
+			spin
+		);
+	end
 
 	-- TODO: Sparkles n shit
 end
