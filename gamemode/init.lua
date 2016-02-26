@@ -26,3 +26,12 @@ function GM:DoPlayerDeath(ply, ...)
 
 	ply:GetTombstone():HandlePlayerDeath();
 end
+
+function GM:Think()
+	self.BaseClass.Think(self)
+
+	for _, ply in pairs(player.GetAll()) do
+		ply:SetDTVector(0, ply:GetVelocity());
+		ply:SetDTVector(1, ply:GetAbsVelocity());
+	end
+end

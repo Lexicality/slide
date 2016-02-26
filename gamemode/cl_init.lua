@@ -10,3 +10,18 @@ include('shared.lua')
 -- 		render.DrawSprite( pos, 16, 16, white ) -- Draw the sprite in the middle of the map, at 16x16 in it's original colour with full alpha.
 -- 	cam.End3D()
 -- end )
+
+function GM:Think()
+	self.BaseClass.Think(self)
+
+	local lpl = LocalPlayer();
+
+	DebugInfo(5, "GetAbsVelocity: " .. tostring(lpl:GetAbsVelocity()));
+	DebugInfo(6, "GetVelocity: " .. tostring(lpl:GetVelocity()));
+	DebugInfo(7, "SS GetVelocity: " .. tostring(lpl:GetDTVector(0)))
+	DebugInfo(8, "SS GetAbsVelocity: " .. tostring(lpl:GetDTVector(1)))
+	DebugInfo(9, "SS GetGroundSpeedVelocity: " .. tostring(lpl:GetDTVector(2)))
+	-- SetAbsVelocity
+	-- SetLocalVelocity
+	-- SetVelocity
+end
