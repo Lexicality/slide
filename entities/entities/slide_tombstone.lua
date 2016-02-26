@@ -25,14 +25,6 @@ function ENT:SetupDataTables()
 	self:NetworkVar("Bool", 0, "GrizzlyWarning")
 end
 
-function ENT:SetPlayer(ply)
-	self.dt.Player = ply;
-end
-
-function ENT:GetPlayer()
-	return self.dt.Player;
-end
-
 function ENT:HandlePlayerDeath()
 	local ply = self:GetPlayer();
 	if not IsValid(ply) then
