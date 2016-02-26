@@ -24,3 +24,6 @@ function GM:CreateTeams()
 	team.SetSpawnPoint(TEAM_SPECTATOR, { "info_player_counterterrorist", "info_player_terrorist" })
 end
 
+function GM:PlayerNoClip(ply, state)
+	return true
+end
