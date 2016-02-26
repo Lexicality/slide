@@ -19,6 +19,13 @@ function GM:PlayerSpawn(ply)
 	-- ply:SetTeam(TEAM_RED);
 	ply:SetTeam(TEAM_BLUE);
 	print("Hi!", ply)
+
+	if (IsValid(ply.trail)) then
+		ply.trail:Remove();
+	end
+
+	local trail = util.SpriteTrail(ply, 0, color_white, false, 50, 0, 10, 1 / 25, "trails/laser.vmt");
+	ply.trail = trail;
 end
 
 function GM:DoPlayerDeath(ply, ...)
