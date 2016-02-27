@@ -36,6 +36,16 @@ function ENT:HandlePlayerDeath()
 	self:SetPos(pos);
 	local ang = ply:GetAngles();
 	self:SetAngles(Angle(0, -ang.yaw, 0));
+
+	local runData = ply:GetRunData();
+	if IsValid(runData) then
+		runData:HandlePlayerDeath();
+		runData:SetFinalRestingPlace(self:GetPos());
+		if IsValid(self.lastRunData) then
+			self.lastRunData:Remove()
+		end
+		self.lastRunData = runData;
+	end
 end
 
 -- function ENT:UpdateTransmitState()

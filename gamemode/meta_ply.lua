@@ -11,3 +11,15 @@ function PLY:GetTombstone()
 	self.tombStone = ts;
 	return ts;
 end
+
+function PLY:GetRunData()
+	return self.runData or NULL;
+end
+
+function PLY:CreateRunData()
+	local rd = ents.Create("slide_rundata");
+	rd:SetupOwner(self);
+	rd:Spawn();
+	self.runData = rd;
+	return rd;
+end
