@@ -23,10 +23,22 @@ include("shared.lua")
 
 include("meta_ply.lua");
 
+include("mapfixes/entities.lua")
+include("mapfixes/triggers.lua")
+
+function GM:FixMap()
+	self:ReplaceTriggerOnces()
+	self:MakeExplosionsRepeatable()
+end
 
 function GM:InitPostEntity()
 	game.ConsoleCommand("sv_accelerate 100\n");
 	game.ConsoleCommand("sv_airaccelerate 100\n");
+	self:FixMap()
+end
+
+function GM:PostCleanupMap()
+	self:FixMap()
 end
 
 function GM:PlayerSpawn(ply)
