@@ -1,0 +1,8 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "licenser.license": "AL2",
+    "licenser.author": "Lex Robinson",
+    "licenser.projectName": "Slide",
+    "licenser.useSingleLineStyle": false,
+    "editor.insertSpaces": false
+}
