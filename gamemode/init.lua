@@ -31,9 +31,17 @@ function GM:FixMap()
 	self:MakeExplosionsRepeatable()
 end
 
+GM.CSSSettings = {
+	sv_accelerate = 10;
+	sv_airaccelerate = 800;
+	sv_gravity = 800;
+	sv_sticktoground = 0;
+}
+
 function GM:InitPostEntity()
-	game.ConsoleCommand("sv_accelerate 100\n");
-	game.ConsoleCommand("sv_airaccelerate 100\n");
+	for key, value in pairs(self.CSSSettings) do
+		game.ConsoleCommand(key .. " " .. value .. "\n");
+	end
 	self:FixMap()
 end
 
