@@ -34,11 +34,12 @@ function GM:Think()
 
 	local lpl = LocalPlayer();
 
-	DebugInfo(5, "GetAbsVelocity: " .. tostring(lpl:GetAbsVelocity()));
-	DebugInfo(6, "GetVelocity: " .. tostring(lpl:GetVelocity()));
-	DebugInfo(7, "SS GetVelocity: " .. tostring(lpl:GetDTVector(0)))
-	DebugInfo(8, "SS GetAbsVelocity: " .. tostring(lpl:GetDTVector(1)))
-	DebugInfo(9, "SS GetGroundSpeedVelocity: " .. tostring(lpl:GetDTVector(2)))
+	local i = 5
+	DebugInfo(i, "GetAbsVelocity: " .. tostring(lpl:GetAbsVelocity())); i = i + 1
+	DebugInfo(i, "GetBaseVelocity: " .. tostring(lpl:GetBaseVelocity())); i = i + 1
+	DebugInfo(i, "GetVelocity: " .. tostring(lpl:GetVelocity())); i = i + 1
+	DebugInfo(i, "Total Velocity: " .. tostring(lpl:GetBaseVelocity() + lpl:GetAbsVelocity())); i = i + 1
+
 	-- SetAbsVelocity
 	-- SetLocalVelocity
 	-- SetVelocity
