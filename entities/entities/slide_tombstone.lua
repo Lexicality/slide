@@ -16,58 +16,58 @@
     limitations under the License.
 --]]
 
-AddCSLuaFile();
+AddCSLuaFile()
 
-ENT.Base        = "base_anim";
-ENT.Type        = "anim";
-ENT.Spawnable   = false;
-ENT.PrintName   = "Tombstone";
-ENT.Purpose     = "Celebrating and marking a player's clumsy death";
+ENT.Base        = "base_anim"
+ENT.Type        = "anim"
+ENT.Spawnable   = false
+ENT.PrintName   = "Tombstone"
+ENT.Purpose     = "Celebrating and marking a player's clumsy death"
 ENT.Author      = "Lexi"
 ENT.RenderGroup = RENDERGROUP_BOTH
 
-ENT.SpriteSize = 70;
+ENT.SpriteSize = 70
 
-DEFINE_BASECLASS "base_entity";
+DEFINE_BASECLASS "base_entity"
 
-print "Holla holla tombstone!";
+print "Holla holla tombstone!"
 
 function ENT:Initialize()
-	self:SetModel("models/gibs/hgibs.mdl");
-	self:SetMoveType(MOVETYPE_NONE);
-	self:SetSolid(SOLID_NONE);
+	self:SetModel("models/gibs/hgibs.mdl")
+	self:SetMoveType(MOVETYPE_NONE)
+	self:SetSolid(SOLID_NONE)
 end
 
 function ENT:SetupDataTables()
-	self:NetworkVar("Entity", 0, "Player");
+	self:NetworkVar("Entity", 0, "Player")
 	self:NetworkVar("Bool", 0, "GrizzlyWarning")
 end
 
 function ENT:HandlePlayerDeath()
-	local ply = self:GetPlayer();
+	local ply = self:GetPlayer()
 	if not IsValid(ply) then
-		error("Player is invalid!", 2);
+		error("Player is invalid!", 2)
 	end
-	local pos = ply:GetPos();
-	local obb = self:OBBMaxs();
-	pos.z = pos.z + obb.z;
-	self:SetPos(pos);
-	local ang = ply:GetAngles();
-	self:SetAngles(Angle(0, -ang.yaw, 0));
+	local pos = ply:GetPos()
+	local obb = self:OBBMaxs()
+	pos.z = pos.z + obb.z
+	self:SetPos(pos)
+	local ang = ply:GetAngles()
+	self:SetAngles(Angle(0, -ang.yaw, 0))
 
-	local runData = ply:GetRunData();
+	local runData = ply:GetRunData()
 	if IsValid(runData) then
-		runData:HandlePlayerDeath();
-		runData:SetFinalRestingPlace(self:GetPos());
+		runData:HandlePlayerDeath()
+		runData:SetFinalRestingPlace(self:GetPos())
 		if IsValid(self.lastRunData) then
 			self.lastRunData:Remove()
 		end
-		self.lastRunData = runData;
+		self.lastRunData = runData
 	end
 end
 
 -- function ENT:UpdateTransmitState()
--- 	return TRANSMIT_ALWAYS;
+-- 	return TRANSMIT_ALWAYS
 -- end
 
 --[[
@@ -86,42 +86,42 @@ if SERVER then
 end
 
 
-local i = 0;
+local i = 0
 function aa(wut)
 	DebugInfo(i, tostring(wut))
 	i = i + 1
 end
 
-ENT.NextParticle = 0;
-ENT.ParticleDelay = 0.1;
+ENT.NextParticle = 0
+ENT.ParticleDelay = 0.1
 function ENT:HandleParticles()
-	local testParticleMaterial = getSaneMaterial("sprites/yelflare1");
-	local ct = CurTime();
+	local testParticleMaterial = getSaneMaterial("sprites/yelflare1")
+	local ct = CurTime()
 	if ct < self.NextParticle then
-		return;
+		return
 	end
-	self.NextParticle = ct + self.ParticleDelay;
+	self.NextParticle = ct + self.ParticleDelay
 
-	local p = self.PortalEmitter:Add(testParticleMaterial, self.BeamTop);
+	local p = self.PortalEmitter:Add(testParticleMaterial, self.BeamTop)
 	if not p then
-		return;
+		return
 	end
-	p:SetVelocity((self.PortalNormal + VectorRand()) * 10);
-	p:SetDieTime(3);
-	p:SetStartSize(3);
-	p:SetEndSize(0);
+	p:SetVelocity((self.PortalNormal + VectorRand()) * 10)
+	p:SetDieTime(3)
+	p:SetStartSize(3)
+	p:SetEndSize(0)
 	local ea = LocalPlayer():EyeAngles()
 	p:SetAngles(ea)
 	p:SetGravity(-vector_up * 5)
 end
 
-ENT.BeamTop = vector_origin;
-ENT.ExitPortal = false;
-ENT.PortalNormal = vector_up;
-ENT.PortalEmitter = nil;
+ENT.BeamTop = vector_origin
+ENT.ExitPortal = false
+ENT.PortalNormal = vector_up
+ENT.PortalEmitter = nil
 function ENT:Think()
 	-- Debugging
-	i = 0;
+	i = 0
 	-- Particles
 	if self.PortalEmitter then
 		self:HandleParticles()
@@ -129,100 +129,100 @@ function ENT:Think()
 	-- Top
 	local here = self:GetPos()
 	local tr = util.TraceLine({
-		start  = here;
-		endpos = here + vector_up * 20000;
-		mask   = MASK_SOLID_BRUSHONLY;
-	});
+		start  = here,
+		endpos = here + vector_up * 20000,
+		mask   = MASK_SOLID_BRUSHONLY,
+	})
 	if tr.HitPos == self.BeamTop then
 		return
 	end
-	self.BeamTop = tr.HitPos;
+	self.BeamTop = tr.HitPos
 	if tr.Hit and not tr.HitSky then
-		self.ExitPortal = true;
-		self.PortalNormal = tr.HitNormal;
+		self.ExitPortal = true
+		self.PortalNormal = tr.HitNormal
 		if self.PortalEmitter then
-			self.PortalEmitter:SetPos(self.BeamTop);
+			self.PortalEmitter:SetPos(self.BeamTop)
 		else
-			self.PortalEmitter = ParticleEmitter(self.BeamTop, true);
+			self.PortalEmitter = ParticleEmitter(self.BeamTop, true)
 		end
 	elseif self.ExitPortal then
-		self.ExitPortal = false;
+		self.ExitPortal = false
 		if self.PortalEmitter then
-			self.PortalEmitter:Finish();
-			self.PortalEmitter = nil;
+			self.PortalEmitter:Finish()
+			self.PortalEmitter = nil
 		end
 	end
-	local ss = self.SpriteSize;
-	local mins = Vector(-ss, -ss, -ss);
-	local maxs = Vector(ss, ss, (self.BeamTop - here).z);
-	self:SetRenderBounds(mins, maxs);
+	local ss = self.SpriteSize
+	local mins = Vector(-ss, -ss, -ss)
+	local maxs = Vector(ss, ss, (self.BeamTop - here).z)
+	self:SetRenderBounds(mins, maxs)
 end
 
 function ENT:ShouldDraw()
 	if self.dt.GrizzlyWarning then
 
-		return true;
+		return true
 	end
-	return self:GetPlayer() == LocalPlayer();
+	return self:GetPlayer() == LocalPlayer()
 end
 
-local debugNo = Color(255, 0, 0);
-local debugYes = Color(0, 255, 0);
+local debugNo = Color(255, 0, 0)
+local debugYes = Color(0, 255, 0)
 
 function ENT:IsTranslucent()
-	return true;
+	return true
 end
 
 function ENT:Draw()
 	if not self:ShouldDraw() then
-		return;
+		return
 	end
 
-	self:DrawModel();
+	self:DrawModel()
 end
 
-local matCache = {};
+local matCache = {}
 function getSaneMaterial(str)
-	local mat;
+	local mat
 	mat = matCache[str]
 	if mat then
-		return mat;
+		return mat
 	end
-	mat = Material(str);
-	matCache[str] = mat;
+	mat = Material(str)
+	matCache[str] = mat
 	if mat:IsError() then
-		return mat;
+		return mat
 	end
 
 	-- Fun with rendermodes ¬_¬
 	if mat:GetInt("$spriterendermode") == 0 then
-		mat:SetInt("$spriterendermode", 5);
+		mat:SetInt("$spriterendermode", 5)
 	end
-	mat:Recompute();
+	mat:Recompute()
 	return mat
 end
 
-local color_orange = Color(255, 0, 200);
+local color_orange = Color(255, 0, 200)
 function ENT:DrawTranslucent()
 	if not self:ShouldDraw() then
-		return;
+		return
 	end
 	-- These have to be cached here due to sprit bullshit
-	local behindGlow = getSaneMaterial("sprites/flare1");
-	local beam = getSaneMaterial("sprites/laserbeam");
-	local portal = getSaneMaterial("sprites/glow02");
+	local behindGlow = getSaneMaterial("sprites/flare1")
+	local beam = getSaneMaterial("sprites/laserbeam")
+	local portal = getSaneMaterial("sprites/glow02")
 
 
 	-- self.BaseClass.DrawTranslucent(self, true)
 
-	local here = self:GetPos();
-	local norm = here - EyePos();
+	local here = self:GetPos()
+	local norm = here - EyePos()
 	norm:Normalize()
 
-	local size = self.SpriteSize;
+	local size = self.SpriteSize
 
-	local top = self.BeamTop;
-	local dist = top - here;
+	local top = self.BeamTop
+	local dist = top - here
 
 	local ct = CurTime()
 
@@ -230,29 +230,29 @@ function ENT:DrawTranslucent()
 
 	-- local
 
-	local beamsize = size / 2;
-	local target = size / 10;
+	local beamsize = size / 2
+	local target = size / 10
 	if not self.ExitPortal then
-		target = 0;
+		target = 0
 	end
-	local steps = 10;
+	local steps = 10
 	local sizeStep = (beamsize - target) / steps
-	local distStep = dist / steps;
+	local distStep = dist / steps
 
-	render.SetMaterial(beam);
+	render.SetMaterial(beam)
 	-- render.OverrideColorWriteEnable(true, true)
-	-- render.SetColorModulation(1, 0, 1);
+	-- render.SetColorModulation(1, 0, 1)
 	render.SetBlend(0.2)
-	render.StartBeam(steps + 1);
-	render.AddBeam(here, beamsize, n);
+	render.StartBeam(steps + 1)
+	render.AddBeam(here, beamsize, n)
 	for i = 1, steps do
-		render.AddBeam(here + distStep * i, beamsize - i * sizeStep, n - i / 4);
+		render.AddBeam(here + distStep * i, beamsize - i * sizeStep, n - i / 4)
 	end
 	-- render.AddBeam(here + (top - here) / 2, 50, 1)
-	-- render.AddBeam(top, 10, 0);
+	-- render.AddBeam(top, 10, 0)
 	render.EndBeam()
 	render.SetBlend(1)
-	render.SetColorModulation(1, 1, 1);
+	render.SetColorModulation(1, 1, 1)
 
 	local spin = (ct * 5) % 360
 
@@ -265,8 +265,8 @@ function ENT:DrawTranslucent()
 		color_white,
 		spin
 		-- math.random(360)
-	);
-	size = size * 0.7;
+	)
+	size = size * 0.7
 	render.DrawQuadEasy(
 		here,
 		norm,
@@ -275,11 +275,11 @@ function ENT:DrawTranslucent()
 		color_white,
 		360 - spin
 		-- math.random(360)
-	);
-	-- render.DrawSprite(self:GetPos(), size, size);
+	)
+	-- render.DrawSprite(self:GetPos(), size, size)
 
 	if (self.ExitPortal) then
-		-- render.SetMaterial(portal);
+		-- render.SetMaterial(portal)
 		render.DrawQuadEasy(
 			self.BeamTop - vector_up,
 			self.PortalNormal,
@@ -287,7 +287,7 @@ function ENT:DrawTranslucent()
 			target * 2.2,
 			color_white,
 			spin
-		);
+		)
 	end
 
 	-- TODO: Sparkles n shit

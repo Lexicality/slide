@@ -27,11 +27,11 @@ player_manager.RegisterClass("class_default", PLAYER, "player_default")
 -- local CLASS = {}
 
 -- function CLASS:Loadout(pl)
--- 	pl:Give("weapon_knife");
+-- 	pl:Give("weapon_knife")
 -- 	if (pl:Team() == TEAM_RED) then
--- 		pl:Give("weapon_real_cs_glock18");
+-- 		pl:Give("weapon_real_cs_glock18")
 -- 	else
--- 		pl:Give("weapon_real_cs_usp");
+-- 		pl:Give("weapon_real_cs_usp")
 -- 	end
 -- end
 

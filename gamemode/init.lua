@@ -21,7 +21,7 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-include("meta_ply.lua");
+include("meta_ply.lua")
 
 include("mapfixes/entities.lua")
 include("mapfixes/triggers.lua")
@@ -32,15 +32,15 @@ function GM:FixMap()
 end
 
 GM.CSSSettings = {
-	sv_accelerate = 10;
-	sv_airaccelerate = 800;
-	sv_gravity = 800;
-	sv_sticktoground = 0;
+	sv_accelerate = 10,
+	sv_airaccelerate = 800,
+	sv_gravity = 800,
+	sv_sticktoground = 0,
 }
 
 function GM:InitPostEntity()
 	for key, value in pairs(self.CSSSettings) do
-		game.ConsoleCommand(key .. " " .. value .. "\n");
+		game.ConsoleCommand(key .. " " .. value .. "\n")
 	end
 	self:FixMap()
 end
@@ -53,25 +53,25 @@ function GM:PlayerSpawn(ply)
 	player_manager.SetPlayerClass(ply, "class_default")
 	self.BaseClass.PlayerSpawn(self, ply)
 
-	-- ply:SetTeam(TEAM_RED);
-	ply:SetTeam(TEAM_BLUE);
-	local rd = ply:CreateRunData();
+	-- ply:SetTeam(TEAM_RED)
+	ply:SetTeam(TEAM_BLUE)
+	local rd = ply:CreateRunData()
 	print("Player Spawned", ply, rd, "!")
 end
 
 function GM:DoPlayerDeath(ply, ...)
-	self.BaseClass.DoPlayerDeath(self, ply, ...);
+	self.BaseClass.DoPlayerDeath(self, ply, ...)
 
-	local ts = ply:GetTombstone();
+	local ts = ply:GetTombstone()
 	if IsValid(ts) then
 		ts:HandlePlayerDeath()
 	end
 
-	-- local rd = ply:GetRunData();
+	-- local rd = ply:GetRunData()
 	-- if IsValid(rd) then
 	-- 	rd:HandlePlayerDeath()
 	-- 	-- TEMP
-	-- 	rd:Remove();
+	-- 	rd:Remove()
 	-- end
 end
 
@@ -79,7 +79,7 @@ function GM:Think()
 	self.BaseClass.Think(self)
 
 	for _, ply in pairs(player.GetAll()) do
-		ply:SetDTVector(0, ply:GetVelocity());
-		ply:SetDTVector(1, ply:GetAbsVelocity());
+		ply:SetDTVector(0, ply:GetVelocity())
+		ply:SetDTVector(1, ply:GetAbsVelocity())
 	end
 end

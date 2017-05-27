@@ -24,7 +24,7 @@ include('shared.lua')
 -- hook.Add( "HUDPaint", "paintsprites", function()
 -- 	cam.Start3D() -- Start the 3D function so we can draw onto the screen.
 -- 		render.SetMaterial( material ) -- Tell render what material we want, in this case the flash from the gravgun
--- 		-- render.SetBlend(0.5);
+-- 		-- render.SetBlend(0.5)
 -- 		render.DrawSprite( pos, 16, 16, white ) -- Draw the sprite in the middle of the map, at 16x16 in it's original colour with full alpha.
 -- 	cam.End3D()
 -- end )
@@ -32,13 +32,13 @@ include('shared.lua')
 function GM:Think()
 	self.BaseClass.Think(self)
 
-	local lpl = LocalPlayer();
+	local lpl = LocalPlayer()
 
 	local i = 5
-	DebugInfo(i, "GetAbsVelocity: " .. tostring(lpl:GetAbsVelocity())); i = i + 1
-	DebugInfo(i, "GetBaseVelocity: " .. tostring(lpl:GetBaseVelocity())); i = i + 1
-	DebugInfo(i, "GetVelocity: " .. tostring(lpl:GetVelocity())); i = i + 1
-	DebugInfo(i, "Total Velocity: " .. tostring(lpl:GetBaseVelocity() + lpl:GetAbsVelocity())); i = i + 1
+	DebugInfo(i, "GetAbsVelocity: " .. tostring(lpl:GetAbsVelocity())) i = i + 1
+	DebugInfo(i, "GetBaseVelocity: " .. tostring(lpl:GetBaseVelocity())) i = i + 1
+	DebugInfo(i, "GetVelocity: " .. tostring(lpl:GetVelocity())) i = i + 1
+	DebugInfo(i, "Total Velocity: " .. tostring(lpl:GetBaseVelocity() + lpl:GetAbsVelocity())) i = i + 1
 
 	-- SetAbsVelocity
 	-- SetLocalVelocity
