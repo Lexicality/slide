@@ -22,6 +22,7 @@ GM.Email   = "lexi@lexi.org.uk"
 GM.Website = "http://lexi.org.uk"
 GM.Version = "0.0.1"
 GM.Help    = "Slide from one end of the map to the other without dying horribly (Easier said than done)"
+GM.TeamBased = true
 
 DeriveGamemode("base")
 include("player_class/class_default.lua")

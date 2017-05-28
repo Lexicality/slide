@@ -49,14 +49,16 @@ function GM:PostCleanupMap()
 	self:FixMap()
 end
 
-function GM:PlayerSpawn(ply)
-	player_manager.SetPlayerClass(ply, "class_default")
-	self.BaseClass.PlayerSpawn(self, ply)
+function GM:PlayerInitialSpawn(ply)
+	BaseClass.PlayerInitialSpawn(self, ply)
 
-	-- ply:SetTeam(TEAM_RED)
-	ply:SetTeam(TEAM_BLUE)
-	local rd = ply:CreateRunData()
-	print("Player Spawned", ply, rd, "!")
+	player_manager.SetPlayerClass(ply, "class_default")
+end
+
+function GM:PlayerSpawn(ply)
+	BaseClass.PlayerSpawn(self, ply)
+
+	ply:CreateRunData()
 end
 
 function GM:DoPlayerDeath(ply, ...)
