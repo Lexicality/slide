@@ -15,6 +15,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 --]]
+AddCSLuaFile()
 
 GM.Name    = "Slide"
 GM.Author  = "Lexi"
