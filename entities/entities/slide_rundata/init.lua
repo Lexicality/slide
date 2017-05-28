@@ -20,10 +20,7 @@ AddCSLuaFile("shared.lua")
 AddCSLuaFile("cl_init.lua")
 include("shared.lua")
 
-print("RD Init")
-
 function ENT:Initialize()
-	print("New RunData!")
 	self:SetModel("models/gibs/hgibs.mdl")
 	self:SetMoveType(MOVETYPE_NONE)
 	self:SetSolid(SOLID_NONE)
@@ -32,17 +29,14 @@ function ENT:Initialize()
 end
 
 function ENT:SetupOwner(ply)
-	print("Got a player!", ply)
 	self:SetPos(ply:GetPos())
 	self:SetParent(ply)
 	ply:DeleteOnRemove(self)
 	self:SetPlayer(ply)
 	self:SetIsTracking(true)
-	print(self.dt.IsTracking)
 end
 
 function ENT:HandlePlayerDeath()
-	print("ply ded :(")
 	self:SetIsTracking(false)
 	self:SetParent(NULL)
 end

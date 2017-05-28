@@ -30,8 +30,6 @@ ENT.SpriteSize = 70
 
 DEFINE_BASECLASS "base_entity"
 
-print "Holla holla tombstone!"
-
 function ENT:Initialize()
 	self:SetModel("models/gibs/hgibs.mdl")
 	self:SetMoveType(MOVETYPE_NONE)

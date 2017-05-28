@@ -18,8 +18,6 @@
 
 include("shared.lua")
 
-print("RD_cl")
-
 ENT.UpdateSpeed = 0.1
 ENT.MaxLength = 50
 ENT.BeamWidth = 20
