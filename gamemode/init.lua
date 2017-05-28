@@ -15,6 +15,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 --]]
+DEFINE_BASECLASS "gamemode_base"
 
 AddCSLuaFile("cl_init.lua")
 
@@ -61,7 +62,7 @@ function GM:PlayerSpawn(ply)
 end
 
 function GM:DoPlayerDeath(ply, ...)
-	self.BaseClass.DoPlayerDeath(self, ply, ...)
+	BaseClass.DoPlayerDeath(self, ply, ...)
 
 	local ts = ply:GetTombstone()
 	if IsValid(ts) then
@@ -88,7 +89,7 @@ function GM:PlayerSilentDeath(ply)
 end
 
 function GM:Think()
-	self.BaseClass.Think(self)
+	BaseClass.Think(self)
 
 	for _, ply in pairs(player.GetAll()) do
 		ply:SetDTVector(0, ply:GetVelocity())

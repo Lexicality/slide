@@ -15,6 +15,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 --]]
+DEFINE_BASECLASS "base_anim"
 
 AddCSLuaFile("cl_init.lua")
 include("shared.lua")

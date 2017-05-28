@@ -15,9 +15,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 --]]
+DEFINE_BASECLASS "base_anim"
 AddCSLuaFile()
 
-ENT.Base        = "base_anim"
 ENT.Type        = "anim"
 ENT.Spawnable   = false
 ENT.PrintName   = "Tombstone"

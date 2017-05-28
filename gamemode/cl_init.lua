@@ -15,6 +15,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 --]]
+DEFINE_BASECLASS "gamemode_base"
 
 include('shared.lua')
 
@@ -30,7 +31,7 @@ include('shared.lua')
 -- end )
 
 function GM:Think()
-	self.BaseClass.Think(self)
+	BaseClass.Think(self)
 
 	local lpl = LocalPlayer()
 

@@ -15,10 +15,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 --]]
-
+DEFINE_BASECLASS "base_anim"
 AddCSLuaFile()
 
-ENT.Base        = "base_anim"
 ENT.Type        = "anim"
 ENT.Spawnable   = false
 ENT.PrintName   = "Tombstone"
@@ -28,7 +27,6 @@ ENT.RenderGroup = RENDERGROUP_BOTH
 
 ENT.SpriteSize = 70
 
-DEFINE_BASECLASS "base_entity"
 
 function ENT:Initialize()
 	self:SetModel("models/gibs/hgibs.mdl")
@@ -211,7 +209,7 @@ function ENT:DrawTranslucent()
 	local portal = getSaneMaterial("sprites/glow02")
 
 
-	-- self.BaseClass.DrawTranslucent(self, true)
+	-- BaseClass.DrawTranslucent(self, true)
 
 	local here = self:GetPos()
 	local norm = here - EyePos()
