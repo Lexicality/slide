@@ -75,6 +75,17 @@ function GM:DoPlayerDeath(ply, ...)
 	-- end
 end
 
+function GM:PlayerSilentDeath(ply)
+	BaseClass.PlayerSilentDeath(self, ply)
+
+	local rd = ply:GetRunData()
+	if IsValid(rd) then
+		rd:HandlePlayerDeath()
+		-- TODO: Do we want to keep rundata that results in a Lua based death? Presumably not
+		-- rd:Remove()
+	end
+end
+
 function GM:Think()
 	self.BaseClass.Think(self)
 

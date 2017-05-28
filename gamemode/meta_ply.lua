@@ -35,6 +35,11 @@ function PLY:GetRunData()
 end
 
 function PLY:CreateRunData()
+	local team = self:Team()
+	if team == TEAM_SPECTATOR or team == TEAM_UNASSIGNED then
+		-- No rundata for ghosts
+		return
+	end
 	local rd = ents.Create("slide_rundata")
 	rd:SetupOwner(self)
 	rd:Spawn()
