@@ -17,6 +17,7 @@
 --]]
 
 DEFINE_BASECLASS "player_default"
+AddCSLuaFile()
 
 local PLAYER = {}
 
