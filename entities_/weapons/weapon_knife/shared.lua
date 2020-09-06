@@ -206,7 +206,7 @@ function SWEP:PrimaryAttack()
 
 		if trace.Entity:IsPlayer() or string.find(trace.Entity:GetClass(),"npc") or string.find(trace.Entity:GetClass(),"prop_ragdoll") then
 			self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
-			bullet = {}
+			local bullet = {}
 			bullet.Num    = 1
 			bullet.Src    = self.Owner:GetShootPos()
 			bullet.Dir    = self.Owner:GetAimVector()
@@ -218,7 +218,7 @@ function SWEP:PrimaryAttack()
 			self.Weapon:EmitSound( "weapons/knife/knife_hit" .. math.random(1, 4) .. ".wav" )
 		else
 			self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
-			bullet = {}
+			local bullet = {}
 			bullet.Num    = 1
 			bullet.Src    = self.Owner:GetShootPos()
 			bullet.Dir    = self.Owner:GetAimVector()

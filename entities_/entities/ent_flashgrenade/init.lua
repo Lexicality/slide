@@ -62,8 +62,8 @@ function ENT:Explode()
 				endtime = 0;
 			end
 
-			simpendtime = math.floor(endtime);
-			tenthendtime = math.floor((endtime - simpendtime) * 10);
+			local simpendtime = math.floor(endtime);
+			local tenthendtime = math.floor((endtime - simpendtime) * 10);
 
 --			if (pl:GetNetworkedFloat("FLASHED_END") > CurTime()) then
 --				pl:SetNetworkedFloat("FLASHED_END", endtime + pl:GetNetworkedFloat("FLASHED_END") + CurTime() - pl:GetNetworkedFloat("FLASHED_START"));

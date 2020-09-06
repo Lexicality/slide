@@ -83,9 +83,30 @@ end
 
 
 local i = 0
-function aa(wut)
+local function aa(wut)
 	DebugInfo(i, tostring(wut))
 	i = i + 1
+end
+
+local matCache = {}
+local function getSaneMaterial(str)
+	local mat
+	mat = matCache[str]
+	if mat then
+		return mat
+	end
+	mat = Material(str)
+	matCache[str] = mat
+	if mat:IsError() then
+		return mat
+	end
+
+	-- Fun with rendermodes ¬_¬
+	if mat:GetInt("$spriterendermode") == 0 then
+		mat:SetInt("$spriterendermode", 5)
+	end
+	mat:Recompute()
+	return mat
 end
 
 ENT.NextParticle = 0
@@ -175,27 +196,6 @@ function ENT:Draw()
 	end
 
 	self:DrawModel()
-end
-
-local matCache = {}
-function getSaneMaterial(str)
-	local mat
-	mat = matCache[str]
-	if mat then
-		return mat
-	end
-	mat = Material(str)
-	matCache[str] = mat
-	if mat:IsError() then
-		return mat
-	end
-
-	-- Fun with rendermodes ¬_¬
-	if mat:GetInt("$spriterendermode") == 0 then
-		mat:SetInt("$spriterendermode", 5)
-	end
-	mat:Recompute()
-	return mat
 end
 
 local color_orange = Color(255, 0, 200)
