@@ -14,7 +14,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-]]--
+]] --
 DEFINE_BASECLASS "gamemode_base"
 
 AddCSLuaFile("cl_init.lua")
@@ -95,4 +95,8 @@ function GM:Think()
 		ply:SetDTVector(0, ply:GetVelocity())
 		ply:SetDTVector(1, ply:GetAbsVelocity())
 	end
+end
+
+function GM:GetFallDamage()
+	return 0
 end
