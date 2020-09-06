@@ -64,7 +64,7 @@ end
 function ENT:PhysicsCollide( data, phys )
 
 	local Ent = data.HitEntity
-	if  not (ValidEntity( Ent ) or Ent:IsWorld()) then return end
+	if  not (IsValid( Ent ) or Ent:IsWorld()) then return end
 
 	if Ent:IsWorld() then
 			util.Decal( "ManhackCut", data.HitPos + data.HitNormal, data.HitPos - data.HitNormal )
@@ -91,7 +91,7 @@ function ENT:PhysicsCollide( data, phys )
 		end
 	end
 
-	self.Entity:SetOwner( NUL )
+	self.Entity:SetOwner( NULL )
 
 end
 

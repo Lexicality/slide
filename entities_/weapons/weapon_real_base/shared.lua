@@ -242,7 +242,7 @@ function SWEP:PrimaryAttack()
 	self:TakePrimaryAmmo(1)
 	-- Take 1 ammo in you clip
 
-	if ((SinglePlayer() and SERVER) or CLIENT) then
+	if ((game.SinglePlayer() and SERVER) or CLIENT) then
 		self.Weapon:SetNetworkedFloat("LastShootTime", CurTime())
 	end
 end
@@ -441,7 +441,7 @@ function SWEP:RecoilPower()
 			-- Punch the screen * 2.5
 		end
 
-	elseif self.Owner:KeyDown(IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT) then
+	elseif self.Owner:KeyDown(bit.bor(IN_FORWARD , IN_BACK , IN_MOVELEFT , IN_MOVERIGHT)) then
 		if (self:GetIronsights() == true) then
 			self:CSShootBullet(self.Primary.Damage, self.Primary.Recoil / 2, self.Primary.NumShots, self.Primary.Cone)
 			-- Put recoil / 2 when you're in ironsight mod
@@ -532,7 +532,7 @@ function SWEP:CSShootBullet(dmg, recoil, numbul, cone)
 			util.Effect(self.ShellEffect,fx)				-- Shell ejection
 	end)
 
-	if ((SinglePlayer() and SERVER) or (not SinglePlayer() and CLIENT)) then
+	if ((game.SinglePlayer() and SERVER) or (not game.SinglePlayer() and CLIENT)) then
 		local eyeang = self.Owner:EyeAngles()
 		eyeang.pitch = eyeang.pitch - recoil
 		self.Owner:SetEyeAngles(eyeang)
