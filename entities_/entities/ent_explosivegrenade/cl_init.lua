@@ -1,4 +1,4 @@
-include('shared.lua')
+include("shared.lua")
 
 -----------------------------------------------------------
 -- Draw
@@ -6,7 +6,6 @@ include('shared.lua')
 function ENT:Draw()
 	self.Entity:DrawModel()
 end
-
 
 -----------------------------------------------------------
 -- IsTranslucent

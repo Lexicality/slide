@@ -14,15 +14,15 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
---]]
+]] --
 DEFINE_BASECLASS "base_anim"
 AddCSLuaFile()
 
-ENT.Type        = "anim"
-ENT.Spawnable   = false
-ENT.PrintName   = "Tombstone"
-ENT.Purpose     = "Celebrating and marking a player's clumsy death"
-ENT.Author      = "Lexi"
+ENT.Type = "anim"
+ENT.Spawnable = false
+ENT.PrintName = "Tombstone"
+ENT.Purpose = "Celebrating and marking a player's clumsy death"
+ENT.Author = "Lexi"
 ENT.RenderGroup = RENDERGROUP_BOTH
 
 function ENT:SetupDataTables()

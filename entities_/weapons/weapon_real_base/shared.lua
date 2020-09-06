@@ -1,5 +1,4 @@
 -- English is not my first language, so sorry if I did some errors in my little "tutorial"
-
 -------------------------------------------------------------
 local HitImpact = function(attacker, tr, dmginfo)
 
@@ -15,17 +14,16 @@ end
 
 if (SERVER) then
 	AddCSLuaFile("shared.lua")
-	SWEP.Weight 		= 5
-	SWEP.HoldType		= "ar2"		-- Hold type style ("ar2" "pistol" "shotgun" "rpg" "normal" "melee" "grenade" "smg")
+	SWEP.Weight = 5
+	SWEP.HoldType = "ar2" -- Hold type style ("ar2" "pistol" "shotgun" "rpg" "normal" "melee" "grenade" "smg")
 end
 
-
 if (CLIENT) then
-	SWEP.DrawAmmo		= true		-- Should we draw the number of ammos and clips?
-	SWEP.DrawCrosshair	= false		-- Should we draw the half life 2 crosshair?
-	SWEP.ViewModelFOV		= 60			-- "Y" position of the sweps
-	SWEP.ViewModelFlip	= true		-- Should we flip the sweps?
-	SWEP.CSMuzzleFlashes	= false		-- Should we add a CS Muzzle Flash?
+	SWEP.DrawAmmo = true -- Should we draw the number of ammos and clips?
+	SWEP.DrawCrosshair = false -- Should we draw the half life 2 crosshair?
+	SWEP.ViewModelFOV = 60 -- "Y" position of the sweps
+	SWEP.ViewModelFlip = true -- Should we flip the sweps?
+	SWEP.CSMuzzleFlashes = false -- Should we add a CS Muzzle Flash?
 
 	-- This is the font that's used to draw the death icons
 	surface.CreateFont("csd", ScreenScale(30), 500, true, true, "CSKillIcons")
@@ -40,62 +38,62 @@ end
 -----------------------------------------------------------
 -- Muzzle Effect + Shell Effect
 -----------------------------------------------------------
-SWEP.MuzzleEffect			= "rg_muzzle_rifle" -- This is an extra muzzleflash effect
+SWEP.MuzzleEffect = "rg_muzzle_rifle" -- This is an extra muzzleflash effect
 -- Available muzzle effects: rg_muzzle_grenade, rg_muzzle_highcal, rg_muzzle_hmg, rg_muzzle_pistol, rg_muzzle_rifle, rg_muzzle_silenced, none
 
-SWEP.ShellEffect			= "rg_shelleject" -- This is a shell ejection effect
+SWEP.ShellEffect = "rg_shelleject" -- This is a shell ejection effect
 -- Available shell eject effects: rg_shelleject, rg_shelleject_rifle, rg_shelleject_shotgun, none
 
-SWEP.MuzzleAttachment		= "1" -- Should be "1" for CSS models or "muzzle" for hl2 models
-SWEP.ShellEjectAttachment	= "2" -- Should be "2" for CSS models or "1" for hl2 models
+SWEP.MuzzleAttachment = "1" -- Should be "1" for CSS models or "muzzle" for hl2 models
+SWEP.ShellEjectAttachment = "2" -- Should be "2" for CSS models or "1" for hl2 models
 
-SWEP.EjectDelay			= 0
+SWEP.EjectDelay = 0
 -----------------------------------------------------------
 
-SWEP.Category			= "CS:S Realistic Weapons"		-- Swep Categorie (You can type what your want)
+SWEP.Category = "CS:S Realistic Weapons" -- Swep Categorie (You can type what your want)
 
-SWEP.DrawWeaponInfoBox  	= true					-- Should we draw a weapon info when you're selecting your swep?
+SWEP.DrawWeaponInfoBox = true -- Should we draw a weapon info when you're selecting your swep?
 
-SWEP.Author 			= "WORSHIPPER"				-- Author Name
-SWEP.Contact 			= ""						-- Author E-Mail
-SWEP.Purpose 			= ""						-- Author's Informations
-SWEP.Instructions 		= ""						-- Instructions of the sweps
+SWEP.Author = "WORSHIPPER" -- Author Name
+SWEP.Contact = "" -- Author E-Mail
+SWEP.Purpose = "" -- Author's Informations
+SWEP.Instructions = "" -- Instructions of the sweps
 
-SWEP.Spawnable 			= false					-- Everybody can spawn this swep
-SWEP.AdminSpawnable 		= false					-- Admin can spawn this swep
+SWEP.Spawnable = false -- Everybody can spawn this swep
+SWEP.AdminSpawnable = false -- Admin can spawn this swep
 
-SWEP.Weight 			= 5						-- Weight of the swep
-SWEP.AutoSwitchTo 		= false
-SWEP.AutoSwitchFrom 		= false
+SWEP.Weight = 5 -- Weight of the swep
+SWEP.AutoSwitchTo = false
+SWEP.AutoSwitchFrom = false
 
-SWEP.Primary.Sound 		= Sound("Weapon_AK47.Single")		-- Sound of the gun
-SWEP.Primary.Recoil 		= 0						-- Recoil of the gun
-SWEP.Primary.Damage 		= 0						-- Damage of the gun
-SWEP.Primary.NumShots 		= 0						-- How many bullet(s) should be fired by the gun at the same time
-SWEP.Primary.Cone 		= 0						-- Precision of the gun
-SWEP.Primary.ClipSize 		= 0						-- Number of bullets in 1 clip
-SWEP.Primary.Delay 		= 0						-- Exemple: If your weapon shoot 800 bullets per minute, this is what you need to do: 1 / (800 / 60) = 0.075
-SWEP.Primary.DefaultClip 	= 0						-- How many ammos come with your weapon (ClipSize + "The number of ammo you want"). If you don't want to add additionnal ammo with your weapon, type the ClipSize only!
-SWEP.Primary.Automatic 		= false					-- Is the weapon automatic?
-SWEP.Primary.Ammo 		= "none"					-- Type of ammo ("pistol" "ar2" "grenade" "smg1" "xbowbolt" "rpg_round" "351")
+SWEP.Primary.Sound = Sound("Weapon_AK47.Single") -- Sound of the gun
+SWEP.Primary.Recoil = 0 -- Recoil of the gun
+SWEP.Primary.Damage = 0 -- Damage of the gun
+SWEP.Primary.NumShots = 0 -- How many bullet(s) should be fired by the gun at the same time
+SWEP.Primary.Cone = 0 -- Precision of the gun
+SWEP.Primary.ClipSize = 0 -- Number of bullets in 1 clip
+SWEP.Primary.Delay = 0 -- Exemple: If your weapon shoot 800 bullets per minute, this is what you need to do: 1 / (800 / 60) = 0.075
+SWEP.Primary.DefaultClip = 0 -- How many ammos come with your weapon (ClipSize + "The number of ammo you want"). If you don't want to add additionnal ammo with your weapon, type the ClipSize only!
+SWEP.Primary.Automatic = false -- Is the weapon automatic?
+SWEP.Primary.Ammo = "none" -- Type of ammo ("pistol" "ar2" "grenade" "smg1" "xbowbolt" "rpg_round" "351")
 
-SWEP.Secondary.ClipSize 	= 0
-SWEP.Secondary.DefaultClip 	= 0
-SWEP.Secondary.Automatic 	= false
-SWEP.Secondary.Ammo 		= "none"
+SWEP.Secondary.ClipSize = 0
+SWEP.Secondary.DefaultClip = 0
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "none"
 
-SWEP.data 				= {}
-SWEP.mode 				= "semi" 					-- The starting firemode
-SWEP.data.ironsights		= 1
+SWEP.data = {}
+SWEP.mode = "semi" -- The starting firemode
+SWEP.data.ironsights = 1
 
-SWEP.data.semi 			= {}
-SWEP.data.semi.FireMode		= "p"
+SWEP.data.semi = {}
+SWEP.data.semi.FireMode = "p"
 
-SWEP.data.auto 			= {}
-SWEP.data.auto.FireMode		= "ppppp"
+SWEP.data.auto = {}
+SWEP.data.auto.FireMode = "ppppp"
 
-SWEP.data.burst			= {}
-SWEP.data.burst.FireMode	= "ppp"
+SWEP.data.burst = {}
+SWEP.data.burst.FireMode = "ppp"
 
 -----------------------------------------------------------
 -- Auto/Semi/Burst Configuration
@@ -126,30 +124,34 @@ end
 -----------------------------------------------------------
 function SWEP:IronSight()
 
-	if  not self.Owner:KeyDown(IN_USE) then
-	-- If the key E (Use Key) is not pressed, then
+	if not self.Owner:KeyDown(IN_USE) then
+		-- If the key E (Use Key) is not pressed, then
 
 		if self.Owner:KeyPressed(IN_ATTACK2) then
-		-- When the right click is pressed, then
+			-- When the right click is pressed, then
 
-			self.Owner:SetFOV( 65, 0.15 )
+			self.Owner:SetFOV(65, 0.15)
 
 			self:SetIronsights(true, self.Owner)
 			-- Set the ironsight true
 
-			if CLIENT then return end
- 		end
+			if CLIENT then
+				return
+			end
+		end
 	end
 
 	if self.Owner:KeyReleased(IN_ATTACK2) then
-	-- If the right click is released, then
+		-- If the right click is released, then
 
-		self.Owner:SetFOV( 0, 0.15 )
+		self.Owner:SetFOV(0, 0.15)
 
 		self:SetIronsights(false, self.Owner)
 		-- Set the ironsight false
 
-		if CLIENT then return end
+		if CLIENT then
+			return
+		end
 	end
 end
 
@@ -167,10 +169,10 @@ end
 function SWEP:Initialize()
 
 	if (SERVER) then
-		self:SetWeaponHoldType(self.HoldType) 	-- Hold type of the 3rd person animation
+		self:SetWeaponHoldType(self.HoldType) -- Hold type of the 3rd person animation
 	end
 
-	self.Reloadaftershoot = 0 				-- Can't reload when firering
+	self.Reloadaftershoot = 0 -- Can't reload when firering
 
 	self.data[self.mode].Init(self)
 end
@@ -180,16 +182,19 @@ end
 -----------------------------------------------------------
 function SWEP:Reload()
 
-	if ( self.Reloadaftershoot > CurTime() ) then return end
+	if (self.Reloadaftershoot > CurTime()) then
+		return
+	end
 	-- If you're firering, you can't reload
 
 	self.Weapon:DefaultReload(ACT_VM_RELOAD)
 	-- Animation when you're reloading
 
-	if ( self.Weapon:Clip1() < self.Primary.ClipSize ) and self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
-	-- When the current clip < full clip and the rest of your ammo > 0, then
+	if (self.Weapon:Clip1() < self.Primary.ClipSize) and
+		self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
+		-- When the current clip < full clip and the rest of your ammo > 0, then
 
-		self.Owner:SetFOV( 0, 0.15 )
+		self.Owner:SetFOV(0, 0.15)
 		-- Zoom = 0
 
 		self:SetIronsights(false)
@@ -202,7 +207,7 @@ end
 -----------------------------------------------------------
 function SWEP:Deploy()
 
-	self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
+	self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
 	-- Set the deploy animation when deploying
 
 	self.Reloadaftershoot = CurTime() + 1
@@ -222,7 +227,9 @@ end
 -----------------------------------------------------------
 function SWEP:PrimaryAttack()
 
-	if not self:CanPrimaryAttack() or self.Owner:WaterLevel() > 2 then return end
+	if not self:CanPrimaryAttack() or self.Owner:WaterLevel() > 2 then
+		return
+	end
 	-- If your gun have a problem or if you are under water, you'll not be able to fire
 
 	self.Reloadaftershoot = CurTime() + self.Primary.Delay
@@ -259,7 +266,7 @@ end
 -----------------------------------------------------------
 function SWEP:CanPrimaryAttack()
 
-	if ( self.Weapon:Clip1() <= 0 ) and self.Primary.ClipSize > -1 then
+	if (self.Weapon:Clip1() <= 0) and self.Primary.ClipSize > -1 then
 		self.Weapon:SetNextPrimaryFire(CurTime() + 0.5)
 		self.Weapon:EmitSound("Weapons/ClipEmpty_Pistol.wav")
 		return false
@@ -272,7 +279,10 @@ end
 -----------------------------------------------------------
 function SWEP:DrawWeaponSelection(x, y, wide, tall, alpha)
 
-	draw.SimpleText(self.IconLetter, "CSSelectIcons", x + wide / 2, y + tall * 0.2, Color(255, 210, 0, 255), TEXT_ALIGN_CENTER)
+	draw.SimpleText(
+		self.IconLetter, "CSSelectIcons", x + wide / 2, y + tall * 0.2,
+		Color(255, 210, 0, 255), TEXT_ALIGN_CENTER
+	)
 	-- Draw a CS:S select icon
 
 	self:PrintWeaponInfo(x + wide + 20, y + tall * 0.95, alpha)
@@ -299,12 +309,14 @@ function SWEP:DrawHUD()
 	end
 
 	surface.SetFont("Firemode")
-	surface.SetTextPos(surface.ScreenWidth() * .9225, surface.ScreenHeight() * .9125)
-	surface.SetTextColor(255,220,0,100)
+	surface.SetTextPos(
+		surface.ScreenWidth() * .9225, surface.ScreenHeight() * .9125
+	)
+	surface.SetTextColor(255, 220, 0, 100)
 
 	surface.DrawText(self.data[self.mode].FireMode)
 
---[[---------------------------------------------------------
+	--[[---------------------------------------------------------
 	local x = ScrW() / 2
 	local y = ScrH() / 2
 
@@ -346,7 +358,7 @@ function SWEP:DrawHUD()
 
 --	surface.SetDrawColor(200, 0, 0, 230)
 --	surface.DrawRect(x - 2, y - 2, 2, 2)
----------------------------------------------------------]]--
+---------------------------------------------------------]] --
 end
 
 -----------------------------------------------------------
@@ -357,7 +369,9 @@ local IRONSIGHT_TIME = 0.15
 
 function SWEP:GetViewModelPosition(pos, ang)
 
-	if (not self.IronSightsPos) then return pos, ang end
+	if (not self.IronSightsPos) then
+		return pos, ang
+	end
 
 	local bIron = self.Weapon:GetNWBool("Ironsights")
 
@@ -366,11 +380,11 @@ function SWEP:GetViewModelPosition(pos, ang)
 		self.fIronTime = CurTime()
 
 		if (bIron) then
-			self.SwayScale 	= 0.3
-			self.BobScale 	= 0.1
+			self.SwayScale = 0.3
+			self.BobScale = 0.1
 		else
-			self.SwayScale 	= 1.0
-			self.BobScale 	= 1.0
+			self.SwayScale = 1.0
+			self.BobScale = 1.0
 		end
 	end
 
@@ -385,21 +399,23 @@ function SWEP:GetViewModelPosition(pos, ang)
 	if (fIronTime > CurTime() - IRONSIGHT_TIME) then
 		Mul = math.Clamp((CurTime() - fIronTime) / IRONSIGHT_TIME, 0, 1)
 
-		if not bIron then Mul = 1 - Mul end
+		if not bIron then
+			Mul = 1 - Mul
+		end
 	end
 
-	local Offset	= self.IronSightsPos
+	local Offset = self.IronSightsPos
 
 	if (self.IronSightsAng) then
 		ang = ang * 1
-		ang:RotateAroundAxis(ang:Right(), 		self.IronSightsAng.x * Mul)
-		ang:RotateAroundAxis(ang:Up(), 		self.IronSightsAng.y * Mul)
-		ang:RotateAroundAxis(ang:Forward(), 	self.IronSightsAng.z * Mul)
+		ang:RotateAroundAxis(ang:Right(), self.IronSightsAng.x * Mul)
+		ang:RotateAroundAxis(ang:Up(), self.IronSightsAng.y * Mul)
+		ang:RotateAroundAxis(ang:Forward(), self.IronSightsAng.z * Mul)
 	end
 
-	local Right 	= ang:Right()
-	local Up 		= ang:Up()
-	local Forward 	= ang:Forward()
+	local Right = ang:Right()
+	local Up = ang:Up()
+	local Forward = ang:Forward()
 
 	pos = pos + Offset.x * Right * Mul
 	pos = pos + Offset.y * Forward * Mul
@@ -428,60 +444,125 @@ function SWEP:RecoilPower()
 
 	if not self.Owner:IsOnGround() then
 		if (self:GetIronsights() == true) then
-			self:CSShootBullet(self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self.Primary.Cone)
+			self:CSShootBullet(
+				self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots,
+				self.Primary.Cone
+			)
 			-- Put normal recoil when you're in ironsight mod
 
-			self.Owner:ViewPunch(Angle(math.Rand(-0.5,-2.5) * (self.Primary.Recoil), math.Rand(-1,1) * (self.Primary.Recoil), 0))
+			self.Owner:ViewPunch(
+				Angle(
+					math.Rand(-0.5, -2.5) * (self.Primary.Recoil),
+					math.Rand(-1, 1) * (self.Primary.Recoil), 0
+				)
+			)
 			-- Punch the screen 1x less hard when you're in ironsigh mod
 		else
-			self:CSShootBullet(self.Primary.Damage, self.Primary.Recoil * 2.5, self.Primary.NumShots, self.Primary.Cone)
+			self:CSShootBullet(
+				self.Primary.Damage, self.Primary.Recoil * 2.5, self.Primary.NumShots,
+				self.Primary.Cone
+			)
 			-- Recoil * 2.5
 
-			self.Owner:ViewPunch(Angle(math.Rand(-0.5,-2.5) * (self.Primary.Recoil * 2.5), math.Rand(-1,1) * (self.Primary.Recoil * 2.5), 0))
+			self.Owner:ViewPunch(
+				Angle(
+					math.Rand(-0.5, -2.5) * (self.Primary.Recoil * 2.5),
+					math.Rand(-1, 1) * (self.Primary.Recoil * 2.5), 0
+				)
+			)
 			-- Punch the screen * 2.5
 		end
 
-	elseif self.Owner:KeyDown(bit.bor(IN_FORWARD , IN_BACK , IN_MOVELEFT , IN_MOVERIGHT)) then
+	elseif self.Owner:KeyDown(
+		bit.bor(IN_FORWARD, IN_BACK, IN_MOVELEFT, IN_MOVERIGHT)
+	) then
 		if (self:GetIronsights() == true) then
-			self:CSShootBullet(self.Primary.Damage, self.Primary.Recoil / 2, self.Primary.NumShots, self.Primary.Cone)
+			self:CSShootBullet(
+				self.Primary.Damage, self.Primary.Recoil / 2, self.Primary.NumShots,
+				self.Primary.Cone
+			)
 			-- Put recoil / 2 when you're in ironsight mod
 
-			self.Owner:ViewPunch(Angle(math.Rand(-0.5,-2.5) * (self.Primary.Recoil / 1.5), math.Rand(-1,1) * (self.Primary.Recoil / 1.5), 0))
+			self.Owner:ViewPunch(
+				Angle(
+					math.Rand(-0.5, -2.5) * (self.Primary.Recoil / 1.5),
+					math.Rand(-1, 1) * (self.Primary.Recoil / 1.5), 0
+				)
+			)
 			-- Punch the screen 1.5x less hard when you're in ironsigh mod
 		else
-			self:CSShootBullet(self.Primary.Damage, self.Primary.Recoil * 1.5, self.Primary.NumShots, self.Primary.Cone)
+			self:CSShootBullet(
+				self.Primary.Damage, self.Primary.Recoil * 1.5, self.Primary.NumShots,
+				self.Primary.Cone
+			)
 			-- Recoil * 1.5
 
-			self.Owner:ViewPunch(Angle(math.Rand(-0.5,-2.5) * (self.Primary.Recoil * 1.5), math.Rand(-1,1) * (self.Primary.Recoil * 1.5), 0))
+			self.Owner:ViewPunch(
+				Angle(
+					math.Rand(-0.5, -2.5) * (self.Primary.Recoil * 1.5),
+					math.Rand(-1, 1) * (self.Primary.Recoil * 1.5), 0
+				)
+			)
 			-- Punch the screen * 1.5
 		end
 
 	elseif self.Owner:Crouching() then
 		if (self:GetIronsights() == true) then
-			self:CSShootBullet(self.Primary.Damage, 0, self.Primary.NumShots, self.Primary.Cone)
+			self:CSShootBullet(
+				self.Primary.Damage, 0, self.Primary.NumShots, self.Primary.Cone
+			)
 			-- Put 0 recoil when you're in ironsight mod
 
-			self.Owner:ViewPunch(Angle(math.Rand(-0.5,-2.5) * (self.Primary.Recoil / 3), math.Rand(-1,1) * (self.Primary.Recoil / 3), 0))
+			self.Owner:ViewPunch(
+				Angle(
+					math.Rand(-0.5, -2.5) * (self.Primary.Recoil / 3),
+					math.Rand(-1, 1) * (self.Primary.Recoil / 3), 0
+				)
+			)
 			-- Punch the screen 3x less hard when you're in ironsigh mod
 		else
-			self:CSShootBullet(self.Primary.Damage, self.Primary.Recoil / 2, self.Primary.NumShots, self.Primary.Cone)
+			self:CSShootBullet(
+				self.Primary.Damage, self.Primary.Recoil / 2, self.Primary.NumShots,
+				self.Primary.Cone
+			)
 			-- Recoil / 2
 
-			self.Owner:ViewPunch(Angle(math.Rand(-0.5,-2.5) * (self.Primary.Recoil / 2), math.Rand(-1,1) * (self.Primary.Recoil / 2), 0))
+			self.Owner:ViewPunch(
+				Angle(
+					math.Rand(-0.5, -2.5) * (self.Primary.Recoil / 2),
+					math.Rand(-1, 1) * (self.Primary.Recoil / 2), 0
+				)
+			)
 			-- Punch the screen / 2
 		end
 	else
 		if (self:GetIronsights() == true) then
-			self:CSShootBullet(self.Primary.Damage, self.Primary.Recoil / 6, self.Primary.NumShots, self.Primary.Cone)
+			self:CSShootBullet(
+				self.Primary.Damage, self.Primary.Recoil / 6, self.Primary.NumShots,
+				self.Primary.Cone
+			)
 			-- Put recoil / 4 when you're in ironsight mod
 
-			self.Owner:ViewPunch(Angle(math.Rand(-0.5,-2.5) * (self.Primary.Recoil / 2), math.Rand(-1,1) * (self.Primary.Recoil / 2), 0))
+			self.Owner:ViewPunch(
+				Angle(
+					math.Rand(-0.5, -2.5) * (self.Primary.Recoil / 2),
+					math.Rand(-1, 1) * (self.Primary.Recoil / 2), 0
+				)
+			)
 			-- Punch the screen 2x less hard when you're in ironsigh mod
 		else
-			self:CSShootBullet(self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self.Primary.Cone)
+			self:CSShootBullet(
+				self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots,
+				self.Primary.Cone
+			)
 			-- Put normal recoil when you're not in ironsight mod
 
-			self.Owner:ViewPunch(Angle(math.Rand(-0.5,-2.5) * self.Primary.Recoil, math.Rand(-1,1) *self.Primary.Recoil, 0))
+			self.Owner:ViewPunch(
+				Angle(
+					math.Rand(-0.5, -2.5) * self.Primary.Recoil,
+					math.Rand(-1, 1) * self.Primary.Recoil, 0
+				)
+			)
 			-- Punch the screen
 		end
 	end
@@ -492,45 +573,47 @@ end
 -----------------------------------------------------------
 function SWEP:CSShootBullet(dmg, recoil, numbul, cone)
 
-	numbul 		= numbul or 1
-	cone 			= cone or 0.01
+	numbul = numbul or 1
+	cone = cone or 0.01
 
-	local bullet 	= {}
-	bullet.Num  	= numbul
-	bullet.Src 		= self.Owner:GetShootPos()       					-- Source
-	bullet.Dir 		= self.Owner:GetAimVector()      					-- Dir of bullet
-	bullet.Spread 	= Vector(cone, cone, 0)     						-- Aim Cone
-	bullet.Tracer 	= 1       									-- Show a tracer on every x bullets
-	bullet.Force 	= 0.5 * dmg     								-- Amount of force to give to phys objects
-	bullet.Damage 	= dmg										-- Amount of damage to give to the bullets
-	bullet.Callback 	= HitImpact
--- 	bullet.Callback	= function ( a, b, c ) BulletPenetration( 0, a, b, c ) end 	-- CALL THE FUNCTION BULLETPENETRATION
+	local bullet = {}
+	bullet.Num = numbul
+	bullet.Src = self.Owner:GetShootPos() -- Source
+	bullet.Dir = self.Owner:GetAimVector() -- Dir of bullet
+	bullet.Spread = Vector(cone, cone, 0) -- Aim Cone
+	bullet.Tracer = 1 -- Show a tracer on every x bullets
+	bullet.Force = 0.5 * dmg -- Amount of force to give to phys objects
+	bullet.Damage = dmg -- Amount of damage to give to the bullets
+	bullet.Callback = HitImpact
+	-- 	bullet.Callback	= function ( a, b, c ) BulletPenetration( 0, a, b, c ) end 	-- CALL THE FUNCTION BULLETPENETRATION
 
-	self.Owner:FireBullets(bullet)					-- Fire the bullets
-	self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)      	-- View model animation
-	self.Owner:MuzzleFlash()        					-- Crappy muzzle light
+	self.Owner:FireBullets(bullet) -- Fire the bullets
+	self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK) -- View model animation
+	self.Owner:MuzzleFlash() -- Crappy muzzle light
 
-	self.Owner:SetAnimation(PLAYER_ATTACK1)       			-- 3rd Person Animation
+	self.Owner:SetAnimation(PLAYER_ATTACK1) -- 3rd Person Animation
 
-	local fx 		= EffectData()
+	local fx = EffectData()
 	fx:SetEntity(self.Weapon)
 	fx:SetOrigin(self.Owner:GetShootPos())
 	fx:SetNormal(self.Owner:GetAimVector())
 	fx:SetAttachment(self.MuzzleAttachment)
-	util.Effect(self.MuzzleEffect,fx)					-- Additional muzzle effects
+	util.Effect(self.MuzzleEffect, fx) -- Additional muzzle effects
 
-	timer.Simple( self.EjectDelay, function()
-		if  not IsFirstTimePredicted() then
-			return
-		end
+	timer.Simple(
+		self.EjectDelay, function()
+			if not IsFirstTimePredicted() then
+				return
+			end
 
-			local fx 	= EffectData()
+			local fx = EffectData()
 			fx:SetEntity(self.Weapon)
 			fx:SetNormal(self.Owner:GetAimVector())
 			fx:SetAttachment(self.ShellEjectAttachment)
 
-			util.Effect(self.ShellEffect,fx)				-- Shell ejection
-	end)
+			util.Effect(self.ShellEffect, fx) -- Shell ejection
+		end
+	)
 
 	if ((game.SinglePlayer() and SERVER) or (not game.SinglePlayer() and CLIENT)) then
 		local eyeang = self.Owner:EyeAngles()
@@ -575,4 +658,4 @@ function BulletPenetration( hitNum, attacker, tr, dmginfo )
  	timer.Simple( 0.01 * hitNum, attacker.FireBullets, attacker, bullet )
  	return { damage = true, effects = DoDefaultEffect }
 end
----------------------------------------------------------]]--
+---------------------------------------------------------]] --

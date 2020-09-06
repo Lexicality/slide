@@ -14,8 +14,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
---]]
-
+]] --
 include("shared.lua")
 
 ENT.UpdateSpeed = 0.1
@@ -78,7 +77,6 @@ function ENT:Think()
 		npos = self.MaxLength
 	end
 
-
 	-- DebugInfo(2, "Pong! - " .. tostring(self:GetPos()))
 	-- DebugInfo(3, "Pling! - " .. tostring(plypos))
 
@@ -87,7 +85,7 @@ function ENT:Think()
 	self.positions[npos] = {
 		-- ctime = CurTime(),
 		-- rtime = RealTime(),
-		pos   = plypos,
+		pos = plypos,
 		-- ang   = ply:GetAngles(),
 		-- vel   = ply:GetVelocity(),
 	}
@@ -95,7 +93,8 @@ function ENT:Think()
 	self:SetRenderBoundsWS(self:GetNewRenderBounds())
 end
 
-function ENT:Draw() end
+function ENT:Draw()
+end
 
 function ENT:IsTranslucent()
 	return true
@@ -117,7 +116,6 @@ function ENT:DrawTranslucent()
 		plypos = deathduties
 		plyPossible = true
 	end
-
 
 	render.SetMaterial(beam)
 	render.StartBeam(npos + (plyPossible and 1 or 0))

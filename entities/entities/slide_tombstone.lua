@@ -14,19 +14,18 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
---]]
+]] --
 DEFINE_BASECLASS "base_anim"
 AddCSLuaFile()
 
-ENT.Type        = "anim"
-ENT.Spawnable   = false
-ENT.PrintName   = "Tombstone"
-ENT.Purpose     = "Celebrating and marking a player's clumsy death"
-ENT.Author      = "Lexi"
+ENT.Type = "anim"
+ENT.Spawnable = false
+ENT.PrintName = "Tombstone"
+ENT.Purpose = "Celebrating and marking a player's clumsy death"
+ENT.Author = "Lexi"
 ENT.RenderGroup = RENDERGROUP_BOTH
 
 ENT.SpriteSize = 70
-
 
 function ENT:Initialize()
 	self:SetModel("models/gibs/hgibs.mdl")
@@ -75,12 +74,11 @@ end
  |_| |_|\___|_|  \___| |_.__/ \___|  \__,_|_|  \__,_|\__, |\___/|_| |_|___/
                                                       __/ |
                                                      |___/
---]]
+]] --
 
 if SERVER then
 	return
 end
-
 
 local i = 0
 local function aa(wut)
@@ -145,11 +143,9 @@ function ENT:Think()
 	end
 	-- Top
 	local here = self:GetPos()
-	local tr = util.TraceLine({
-		start  = here,
-		endpos = here + vector_up * 20000,
-		mask   = MASK_SOLID_BRUSHONLY,
-	})
+	local tr = util.TraceLine(
+		{start = here, endpos = here + vector_up * 20000, mask = MASK_SOLID_BRUSHONLY}
+	)
 	if tr.HitPos == self.BeamTop then
 		return
 	end
@@ -208,7 +204,6 @@ function ENT:DrawTranslucent()
 	local beam = getSaneMaterial("sprites/laserbeam")
 	local portal = getSaneMaterial("sprites/glow02")
 
-
 	-- BaseClass.DrawTranslucent(self, true)
 
 	local here = self:GetPos()
@@ -254,22 +249,14 @@ function ENT:DrawTranslucent()
 
 	render.SetMaterial(behindGlow)
 	render.DrawQuadEasy(
-		here,
-		norm,
-		size + (math.random() * 2 - 1),
-		size + (math.random() * 2 - 1),
-		color_white,
-		spin
+		here, norm, size + (math.random() * 2 - 1), size + (math.random() * 2 - 1),
+		color_white, spin
 		-- math.random(360)
 	)
 	size = size * 0.7
 	render.DrawQuadEasy(
-		here,
-		norm,
-		size + (math.random() * 2 - 1),
-		size + (math.random() * 2 - 1),
-		color_white,
-		360 - spin
+		here, norm, size + (math.random() * 2 - 1), size + (math.random() * 2 - 1),
+		color_white, 360 - spin
 		-- math.random(360)
 	)
 	-- render.DrawSprite(self:GetPos(), size, size)
@@ -277,12 +264,8 @@ function ENT:DrawTranslucent()
 	if (self.ExitPortal) then
 		-- render.SetMaterial(portal)
 		render.DrawQuadEasy(
-			self.BeamTop - vector_up,
-			self.PortalNormal,
-			target * 2.2,
-			target * 2.2,
-			color_white,
-			spin
+			self.BeamTop - vector_up, self.PortalNormal, target * 2.2, target * 2.2,
+			color_white, spin
 		)
 	end
 

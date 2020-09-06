@@ -1,9 +1,9 @@
 ENT.Type = "anim"
-ENT.PrintName		= "EXPLOSIVE GRENADE"
-ENT.Author			= "WORSHIPPER"
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
+ENT.PrintName = "EXPLOSIVE GRENADE"
+ENT.Author = "WORSHIPPER"
+ENT.Contact = ""
+ENT.Purpose = ""
+ENT.Instructions = ""
 
 -----------------------------------------------------------
 -- OnRemove
@@ -20,7 +20,7 @@ end
 -----------------------------------------------------------
 -- PhysicsCollide
 -----------------------------------------------------------
-function ENT:PhysicsCollide(data,phys)
+function ENT:PhysicsCollide(data, phys)
 	if data.Speed > 50 then
 		self.Entity:EmitSound(Sound("HEGrenade.Bounce"))
 	end

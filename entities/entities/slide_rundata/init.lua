@@ -14,7 +14,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
---]]
+]] --
 DEFINE_BASECLASS "base_anim"
 
 AddCSLuaFile("cl_init.lua")
@@ -54,8 +54,8 @@ function ENT:Think()
 	self.positions[#self.positions + 1] = {
 		ctime = CurTime(),
 		rtime = RealTime(),
-		pos   = ply:GetPos(),
-		ang   = ply:GetAngles(),
-		vel   = ply:GetVelocity(),
+		pos = ply:GetPos(),
+		ang = ply:GetAngles(),
+		vel = ply:GetVelocity(),
 	}
 end

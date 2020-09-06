@@ -1,6 +1,5 @@
 -- Flashbang Entity originally made by Cheesylard but modified by me. Cheesy, if you really don't appreciate what I take from you, just tell me, I'll remove this flash.
-
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 local FLASH_INTENSITY = 3000
@@ -11,13 +10,13 @@ local FLASH_INTENSITY = 3000
 function ENT:Initialize()
 
 	self.Entity:SetModel("models/weapons/w_eq_flashbang_thrown.mdl")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:DrawShadow( false )
+	self.Entity:PhysicsInit(SOLID_VPHYSICS)
+	self.Entity:SetMoveType(MOVETYPE_VPHYSICS)
+	self.Entity:SetSolid(SOLID_VPHYSICS)
+	self.Entity:DrawShadow(false)
 
 	-- Don't collide with the player
-	self.Entity:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+	self.Entity:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 	self.Entity:SetNetworkedString("Owner", "World")
 
 	local phys = self.Entity:GetPhysicsObject()
@@ -26,12 +25,13 @@ function ENT:Initialize()
 		phys:Wake()
 	end
 
-	timer.Simple(2,
-	function()
-		if self.Entity then
-			self:Explode()
+	timer.Simple(
+		2, function()
+			if self.Entity then
+				self:Explode()
+			end
 		end
-	end)
+	)
 end
 
 -----------------------------------------------------------
@@ -41,7 +41,7 @@ function ENT:Explode()
 
 	self.Entity:EmitSound(Sound("Flashbang.Explode"));
 
-	for _,pl in pairs(player.GetAll()) do
+	for _, pl in pairs(player.GetAll()) do
 
 		local ang = (self.Entity:GetPos() - pl:GetShootPos()):Normalize():Angle()
 
@@ -52,8 +52,8 @@ function ENT:Explode()
 		tracedata.filter = pl;
 		local tr = util.TraceLine(tracedata);
 
-		if ( not tr.HitWorld) then
-			local dist = pl:GetShootPos():Distance( self.Entity:GetPos() )
+		if (not tr.HitWorld) then
+			local dist = pl:GetShootPos():Distance(self.Entity:GetPos())
 			local endtime = FLASH_INTENSITY / (dist * 2);
 
 			if (endtime > 6) then
@@ -65,11 +65,11 @@ function ENT:Explode()
 			local simpendtime = math.floor(endtime);
 			local tenthendtime = math.floor((endtime - simpendtime) * 10);
 
---			if (pl:GetNetworkedFloat("FLASHED_END") > CurTime()) then
---				pl:SetNetworkedFloat("FLASHED_END", endtime + pl:GetNetworkedFloat("FLASHED_END") + CurTime() - pl:GetNetworkedFloat("FLASHED_START"));
---			else
-				pl:SetNetworkedFloat("FLASHED_END", endtime + CurTime());
---			end
+			--			if (pl:GetNetworkedFloat("FLASHED_END") > CurTime()) then
+			--				pl:SetNetworkedFloat("FLASHED_END", endtime + pl:GetNetworkedFloat("FLASHED_END") + CurTime() - pl:GetNetworkedFloat("FLASHED_START"));
+			--			else
+			pl:SetNetworkedFloat("FLASHED_END", endtime + CurTime());
+			--			end
 
 			pl:SetNetworkedFloat("FLASHED_END_START", CurTime());
 		end
