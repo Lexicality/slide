@@ -1,5 +1,5 @@
 
-//ENT.Base = "base_entity"
+--ENT.Base = "base_entity"
 ENT.Type = "anim"
 
 ENT.PrintName		= "SMOKE GRENADE"
@@ -9,26 +9,26 @@ ENT.Purpose			= ""
 ENT.Instructions		= ""
 
 
-/*---------------------------------------------------------
-Remove
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Remove
+-----------------------------------------------------------
 function ENT:OnRemove()
 end
 
-/*---------------------------------------------------------
-PhysicsUpdate
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PhysicsUpdate
+-----------------------------------------------------------
 function ENT:PhysicsUpdate()
 end
 
-/*---------------------------------------------------------
-PhysicsCollide
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PhysicsCollide
+-----------------------------------------------------------
 function ENT:PhysicsCollide(data,phys)
 	if data.Speed > 50 then
 		self.Entity:EmitSound(Sound("SmokeGrenade.Bounce"))
 	end
-	
+
 	local impulse = -data.Speed * data.HitNormal * .4 + (data.OurOldVelocity * -.6)
 	phys:ApplyForceCenter(impulse)
 end

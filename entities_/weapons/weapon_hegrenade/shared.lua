@@ -1,5 +1,5 @@
 if (SERVER) then
-  
+
 	AddCSLuaFile ("shared.lua")
 	SWEP.Weight 			= 5
 	SWEP.AutoSwitchTo 		= false
@@ -48,18 +48,18 @@ SWEP.Primed 				= 0
 SWEP.Throw 					= CurTime()
 SWEP.PrimaryThrow				= true
 
-/*---------------------------------------------------------
-Initialize
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Initialize
+-----------------------------------------------------------
 function SWEP:Initialize()
 	--if (SERVER) then
 		self:SetWeaponHoldType("grenade")
 	--end
 end
 
-/*---------------------------------------------------------
-Holster
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Holster
+-----------------------------------------------------------
 function SWEP:Holster()
 	self.Primed = 0
 	self.Throw = CurTime()
@@ -67,15 +67,15 @@ function SWEP:Holster()
 return true
 end
 
-/*---------------------------------------------------------
-Reload
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Reload
+-----------------------------------------------------------
 function SWEP:Reload()
 end
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function SWEP:Think()
 
 	if self.Primed == 1 and not self.Owner:KeyDown(IN_ATTACK) and self.PrimaryThrow then
@@ -106,16 +106,16 @@ function SWEP:Think()
 	end
 end
 
-/*---------------------------------------------------------
-ThrowFar
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- ThrowFar
+-----------------------------------------------------------
 function SWEP:ThrowFar()
 
-	if self.Primed != 2 then return end
+	if self.Primed ~= 2 then return end
 
 	local tr = self.Owner:GetEyeTrace()
 
-	if (!SERVER) then return end
+	if ( not SERVER) then return end
 
 	local ent = ents.Create ("ent_explosivegrenade")
 
@@ -162,16 +162,16 @@ function SWEP:ThrowFar()
 	end)
 end
 
-/*---------------------------------------------------------
-ThrowShort
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- ThrowShort
+-----------------------------------------------------------
 function SWEP:ThrowShort()
 
-	if self.Primed != 2 then return end
+	if self.Primed ~= 2 then return end
 
 	local tr = self.Owner:GetEyeTrace()
 
-	if (!SERVER) then return end
+	if ( not SERVER) then return end
 
 	local ent = ents.Create ("ent_explosivegrenade")
 
@@ -218,9 +218,9 @@ function SWEP:ThrowShort()
 	end)
 end
 
-/*---------------------------------------------------------
-PrimaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PrimaryAttack
+-----------------------------------------------------------
 function SWEP:PrimaryAttack()
 
 	if self.Throw < CurTime() and self.Primed == 0 and self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
@@ -231,9 +231,9 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-/*---------------------------------------------------------
-SecondaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- SecondaryAttack
+-----------------------------------------------------------
 function SWEP:SecondaryAttack()
 
 	if self.Throw < CurTime() and self.Primed == 0 and self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
@@ -244,9 +244,9 @@ function SWEP:SecondaryAttack()
 	end
 end
 
-/*---------------------------------------------------------
-Deploy
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Deploy
+-----------------------------------------------------------
 function SWEP:Deploy()
 
 	self.Throw = CurTime() + 0.75
@@ -255,9 +255,9 @@ function SWEP:Deploy()
 	return true
 end
 
-/*---------------------------------------------------------
-DrawWeaponSelection
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- DrawWeaponSelection
+-----------------------------------------------------------
 function SWEP:DrawWeaponSelection(x, y, wide, tall, alpha)
 
 	draw.SimpleText(self.IconLetter, "CSSelectIcons", x + wide / 2, y + tall * 0.2, Color(255, 210, 0, 255), TEXT_ALIGN_CENTER)

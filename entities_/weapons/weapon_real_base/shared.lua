@@ -1,6 +1,6 @@
 -- English is not my first language, so sorry if I did some errors in my little "tutorial"
 
-/*---------------------------------------------------------*/
+-------------------------------------------------------------
 local HitImpact = function(attacker, tr, dmginfo)
 
 	local hit = EffectData()
@@ -11,7 +11,7 @@ local HitImpact = function(attacker, tr, dmginfo)
 
 	return true
 end
-/*---------------------------------------------------------*/
+-------------------------------------------------------------
 
 if (SERVER) then
 	AddCSLuaFile("shared.lua")
@@ -37,9 +37,9 @@ if (CLIENT) then
 	surface.CreateFont("HalfLife2", ScrW() / 60, 500, true, true, "Firemode")
 end
 
-/*---------------------------------------------------------
-Muzzle Effect + Shell Effect
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Muzzle Effect + Shell Effect
+-----------------------------------------------------------
 SWEP.MuzzleEffect			= "rg_muzzle_rifle" -- This is an extra muzzleflash effect
 -- Available muzzle effects: rg_muzzle_grenade, rg_muzzle_highcal, rg_muzzle_hmg, rg_muzzle_pistol, rg_muzzle_rifle, rg_muzzle_silenced, none
 
@@ -50,7 +50,7 @@ SWEP.MuzzleAttachment		= "1" -- Should be "1" for CSS models or "muzzle" for hl2
 SWEP.ShellEjectAttachment	= "2" -- Should be "2" for CSS models or "1" for hl2 models
 
 SWEP.EjectDelay			= 0
-/*-------------------------------------------------------*/
+-----------------------------------------------------------
 
 SWEP.Category			= "CS:S Realistic Weapons"		-- Swep Categorie (You can type what your want)
 
@@ -76,7 +76,7 @@ SWEP.Primary.Cone 		= 0						-- Precision of the gun
 SWEP.Primary.ClipSize 		= 0						-- Number of bullets in 1 clip
 SWEP.Primary.Delay 		= 0						-- Exemple: If your weapon shoot 800 bullets per minute, this is what you need to do: 1 / (800 / 60) = 0.075
 SWEP.Primary.DefaultClip 	= 0						-- How many ammos come with your weapon (ClipSize + "The number of ammo you want"). If you don't want to add additionnal ammo with your weapon, type the ClipSize only!
-SWEP.Primary.Automatic 		= false					-- Is the weapon automatic? 
+SWEP.Primary.Automatic 		= false					-- Is the weapon automatic?
 SWEP.Primary.Ammo 		= "none"					-- Type of ammo ("pistol" "ar2" "grenade" "smg1" "xbowbolt" "rpg_round" "351")
 
 SWEP.Secondary.ClipSize 	= 0
@@ -97,9 +97,9 @@ SWEP.data.auto.FireMode		= "ppppp"
 SWEP.data.burst			= {}
 SWEP.data.burst.FireMode	= "ppp"
 
-/*---------------------------------------------------------
-Auto/Semi/Burst Configuration
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Auto/Semi/Burst Configuration
+-----------------------------------------------------------
 function SWEP.data.semi.Init(self)
 
 	self.Primary.Automatic = false
@@ -121,12 +121,12 @@ function SWEP.data.burst.Init(self)
 	self.Weapon:SetNetworkedInt("firemode", 2)
 end
 
-/*---------------------------------------------------------
-IronSight
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- IronSight
+-----------------------------------------------------------
 function SWEP:IronSight()
 
-	if !self.Owner:KeyDown(IN_USE) then
+	if  not self.Owner:KeyDown(IN_USE) then
 	-- If the key E (Use Key) is not pressed, then
 
 		if self.Owner:KeyPressed(IN_ATTACK2) then
@@ -153,17 +153,17 @@ function SWEP:IronSight()
 	end
 end
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function SWEP:Think()
 
 	self:IronSight()
 end
 
-/*---------------------------------------------------------
-Initialize
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Initialize
+-----------------------------------------------------------
 function SWEP:Initialize()
 
 	if (SERVER) then
@@ -175,15 +175,15 @@ function SWEP:Initialize()
 	self.data[self.mode].Init(self)
 end
 
-/*---------------------------------------------------------
-Reload
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Reload
+-----------------------------------------------------------
 function SWEP:Reload()
 
-	if ( self.Reloadaftershoot > CurTime() ) then return end 
+	if ( self.Reloadaftershoot > CurTime() ) then return end
 	-- If you're firering, you can't reload
 
-	self.Weapon:DefaultReload(ACT_VM_RELOAD) 
+	self.Weapon:DefaultReload(ACT_VM_RELOAD)
 	-- Animation when you're reloading
 
 	if ( self.Weapon:Clip1() < self.Primary.ClipSize ) and self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
@@ -197,9 +197,9 @@ function SWEP:Reload()
 	end
 end
 
-/*---------------------------------------------------------
-Deploy
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Deploy
+-----------------------------------------------------------
 function SWEP:Deploy()
 
 	self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
@@ -217,9 +217,9 @@ function SWEP:Deploy()
 	return true
 end
 
-/*---------------------------------------------------------
-PrimaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PrimaryAttack
+-----------------------------------------------------------
 function SWEP:PrimaryAttack()
 
 	if not self:CanPrimaryAttack() or self.Owner:WaterLevel() > 2 then return end
@@ -247,16 +247,16 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-/*---------------------------------------------------------
-SecondaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- SecondaryAttack
+-----------------------------------------------------------
 function SWEP:SecondaryAttack()
 
 end
 
-/*---------------------------------------------------------
-CanPrimaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- CanPrimaryAttack
+-----------------------------------------------------------
 function SWEP:CanPrimaryAttack()
 
 	if ( self.Weapon:Clip1() <= 0 ) and self.Primary.ClipSize > -1 then
@@ -267,9 +267,9 @@ function SWEP:CanPrimaryAttack()
 	return true
 end
 
-/*---------------------------------------------------------
-DrawWeaponSelection
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- DrawWeaponSelection
+-----------------------------------------------------------
 function SWEP:DrawWeaponSelection(x, y, wide, tall, alpha)
 
 	draw.SimpleText(self.IconLetter, "CSSelectIcons", x + wide / 2, y + tall * 0.2, Color(255, 210, 0, 255), TEXT_ALIGN_CENTER)
@@ -281,9 +281,9 @@ end
 
 SWEP.CrossHairScale = 1
 -- CROSSHAIR THAT I DIDN'T ADD IN THIS VERSION. IT WAS JUST EXPERIMENTAL AGAIN.
-/*---------------------------------------------------------
-DrawHUD
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- DrawHUD
+-----------------------------------------------------------
 function SWEP:DrawHUD()
 
 	local mode = self.Weapon:GetNetworkedInt("firemode")
@@ -304,7 +304,7 @@ function SWEP:DrawHUD()
 
 	surface.DrawText(self.data[self.mode].FireMode)
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
 	local x = ScrW() / 2
 	local y = ScrH() / 2
 
@@ -346,12 +346,12 @@ function SWEP:DrawHUD()
 
 --	surface.SetDrawColor(200, 0, 0, 230)
 --	surface.DrawRect(x - 2, y - 2, 2, 2)
----------------------------------------------------------*/
+---------------------------------------------------------]]--
 end
 
-/*---------------------------------------------------------
-GetViewModelPosition
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- GetViewModelPosition
+-----------------------------------------------------------
 local IRONSIGHT_TIME = 0.15
 -- Time to enter in the ironsight mod
 
@@ -361,7 +361,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
 	local bIron = self.Weapon:GetNWBool("Ironsights")
 
-	if (bIron != self.bLastIron) then
+	if (bIron ~= self.bLastIron) then
 		self.bLastIron = bIron
 		self.fIronTime = CurTime()
 
@@ -408,9 +408,9 @@ function SWEP:GetViewModelPosition(pos, ang)
 	return pos, ang
 end
 
-/*---------------------------------------------------------
-SetIronsights
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- SetIronsights
+-----------------------------------------------------------
 function SWEP:SetIronsights(b)
 
 	self.Weapon:SetNetworkedBool("Ironsights", b)
@@ -421,9 +421,9 @@ function SWEP:GetIronsights()
 	return self.Weapon:GetNWBool("Ironsights")
 end
 
-/*---------------------------------------------------------
-RecoilPower
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- RecoilPower
+-----------------------------------------------------------
 function SWEP:RecoilPower()
 
 	if not self.Owner:IsOnGround() then
@@ -487,9 +487,9 @@ function SWEP:RecoilPower()
 	end
 end
 
-/*---------------------------------------------------------
-ShootBullet
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- ShootBullet
+-----------------------------------------------------------
 function SWEP:CSShootBullet(dmg, recoil, numbul, cone)
 
 	numbul 		= numbul or 1
@@ -518,9 +518,9 @@ function SWEP:CSShootBullet(dmg, recoil, numbul, cone)
 	fx:SetNormal(self.Owner:GetAimVector())
 	fx:SetAttachment(self.MuzzleAttachment)
 	util.Effect(self.MuzzleEffect,fx)					-- Additional muzzle effects
-	
+
 	timer.Simple( self.EjectDelay, function()
-		if  not IsFirstTimePredicted() then 
+		if  not IsFirstTimePredicted() then
 			return
 		end
 
@@ -540,39 +540,39 @@ function SWEP:CSShootBullet(dmg, recoil, numbul, cone)
 end
 
 -- BULLET PENETRATION | EXPERIMENTAL CODE | BULLETS CAN PASS TROUGHT THE SMALL PROPS
-/*---------------------------------------------------------
-BulletPenetration
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- BulletPenetration
+-----------------------------------------------------------
 
-/*---------------------------------------------------------
-function BulletPenetration( hitNum, attacker, tr, dmginfo ) 
+--[[---------------------------------------------------------
+function BulletPenetration( hitNum, attacker, tr, dmginfo )
 
- 	local DoDefaultEffect = true; 
- 	if ( !tr.HitWorld ) then DoDefaultEffect = true end
+ 	local DoDefaultEffect = true;
+ 	if (  not tr.HitWorld ) then DoDefaultEffect = true end
 	if ( tr.HitWorld ) then return end
 
 	if tr.Hit then
 	end
 
- 	if ( CLIENT ) then return end 
- 	if ( hitNum > 6 ) then return end 
+ 	if ( CLIENT ) then return end
+ 	if ( hitNum > 6 ) then return end
 
- 	local bullet =  
- 	{	 
- 		Num 		= 1, 
- 		Src 		= tr.HitPos + attacker:GetAimVector() * 4, 
+ 	local bullet =
+ 	{
+ 		Num 		= 1,
+ 		Src 		= tr.HitPos + attacker:GetAimVector() * 4,
  		Dir 		= attacker:GetAimVector(),
- 		Spread 	= Vector( 0.005, 0.005, 0 ), 
- 		Tracer	= 1, 
- 		TracerName 	= "effect_trace_bulletpenetration", 
- 		Force		= 0, 
- 		Damage	= 25 / hitNum, 
- 		AmmoType 	= "Pistol"  
- 	} 
- 	if (SERVER) then 
- 		bullet.Callback    = function( a, b, c ) BulletPenetration( hitNum + 1, a, b, c ) end 
- 	end 
- 	timer.Simple( 0.01 * hitNum, attacker.FireBullets, attacker, bullet ) 
- 	return { damage = true, effects = DoDefaultEffect } 
+ 		Spread 	= Vector( 0.005, 0.005, 0 ),
+ 		Tracer	= 1,
+ 		TracerName 	= "effect_trace_bulletpenetration",
+ 		Force		= 0,
+ 		Damage	= 25 / hitNum,
+ 		AmmoType 	= "Pistol"
+ 	}
+ 	if (SERVER) then
+ 		bullet.Callback    = function( a, b, c ) BulletPenetration( hitNum + 1, a, b, c ) end
+ 	end
+ 	timer.Simple( 0.01 * hitNum, attacker.FireBullets, attacker, bullet )
+ 	return { damage = true, effects = DoDefaultEffect }
 end
----------------------------------------------------------*/
+---------------------------------------------------------]]--

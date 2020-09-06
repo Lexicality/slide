@@ -58,9 +58,9 @@ SWEP.data.burst.Shots 		= 3
 SWEP.data.burst.Counter 	= 0
 SWEP.data.burst.Timer 		= 0
 
-/*---------------------------------------------------------
-PrimaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PrimaryAttack
+-----------------------------------------------------------
 function SWEP:PrimaryAttack()
 
 	if not self:CanPrimaryAttack() or self.Owner:WaterLevel() > 2 then return end
@@ -94,9 +94,9 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-/*---------------------------------------------------------
-SecondaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- SecondaryAttack
+-----------------------------------------------------------
 function SWEP:SecondaryAttack()
 
 	if self.Owner:KeyDown(IN_USE) then
@@ -113,12 +113,12 @@ function SWEP:SecondaryAttack()
 	end
 end
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function SWEP:Think()
 
-	if self.data.init then		
+	if self.data.init then
 		self.data.init = nil
 	end
 	if self.mode == "burst" then
@@ -126,7 +126,7 @@ function SWEP:Think()
 			if self.data.burst.Counter > 0 then
 				self.data.burst.Counter = self.data.burst.Counter - 1
 				self.data.burst.Timer = CurTime()
-				
+
 				if self:CanPrimaryAttack() then
 					self.Weapon:EmitSound(self.Primary.Sound)
 					if self.Owner:GetFOV() == 0 then
@@ -143,9 +143,9 @@ function SWEP:Think()
 	self:IronSight()
 end
 
-/*---------------------------------------------------------
-RecoilPower
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- RecoilPower
+-----------------------------------------------------------
 function SWEP:RecoilPower()
 
 	if not self.Owner:IsOnGround() then
@@ -163,7 +163,7 @@ function SWEP:RecoilPower()
 			-- Punch the screen * 2.5
 		end
 
-	elseif self.Owner:KeyDown(IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT) then
+	elseif self.Owner:KeyDown(bit.bor(IN_FORWARD , IN_BACK , IN_MOVELEFT , IN_MOVERIGHT)) then
 		if (self:GetIronsights() == true) then
 			self:CSShootBullet(self.Primary.Damage, self.Primary.Recoil / 2, self.Primary.NumShots, self.data[self.mode].Cone)
 			-- Put recoil / 2 when you're in ironsight mod

@@ -1,4 +1,4 @@
-/*---------------------------------------------------------*/
+-------------------------------------------------------------
 local HitImpact = function(attacker, tr, dmginfo)
 
 	local hit = EffectData()
@@ -9,7 +9,7 @@ local HitImpact = function(attacker, tr, dmginfo)
 
 	return true
 end
-/*---------------------------------------------------------*/
+-------------------------------------------------------------
 
 if (SERVER) then
 	AddCSLuaFile("shared.lua")
@@ -26,9 +26,9 @@ if (CLIENT) then
 	killicon.AddFont("weapon_real_cs_usp", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ))
 end
 
-/*---------------------------------------------------------
-Muzzle Effect + Shell Effect
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Muzzle Effect + Shell Effect
+-----------------------------------------------------------
 SWEP.ShellEffect			= "rg_shelleject" -- This is a shell ejection effect
 -- Available shell eject effects: rg_shelleject, rg_shelleject_rifle, rg_shelleject_shotgun, none
 
@@ -36,7 +36,7 @@ SWEP.MuzzleAttachment		= "1" -- Should be "1" for CSS models or "muzzle" for hl2
 SWEP.ShellEjectAttachment	= "2" -- Should be "2" for CSS models or "1" for hl2 models
 
 SWEP.EjectDelay			= 0.05
-/*-------------------------------------------------------*/
+-----------------------------------------------------------
 
 SWEP.Instructions 		= "Damage: 20% \nRecoil: 10% \nPrecision: 85.5% \nType: Semi-Automatic \n\nSilence Mode: E + Left Click"
 
@@ -64,9 +64,9 @@ SWEP.IronSightsAng 		= Vector (1.5025, 0.6891, 0)
 
 SWEP.data 				= {}
 
-/*---------------------------------------------------------
-Initialize
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Initialize
+-----------------------------------------------------------
 function SWEP:Initialize()
 
 	if (SERVER) then
@@ -78,12 +78,12 @@ function SWEP:Initialize()
 	self.data[self.mode].Init(self)
 end
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function SWEP:Think()
 
-	if self.data.init then		
+	if self.data.init then
 		self.data.init = nil
 	end
 
@@ -110,12 +110,12 @@ function SWEP:Think()
 	self:IronSight()
 end
 
-/*---------------------------------------------------------
-PrimaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PrimaryAttack
+-----------------------------------------------------------
 function SWEP:PrimaryAttack()
 
-	if !self.Owner:KeyDown(IN_USE) then
+	if  not self.Owner:KeyDown(IN_USE) then
 
 		if not self:CanPrimaryAttack() or self.Owner:WaterLevel() > 2 then return end
 		-- If your gun have a problem or if you are under water, you'll not be able to fire
@@ -134,7 +134,7 @@ function SWEP:PrimaryAttack()
 
 		self.Weapon:EmitSound(self.Primary.Sound)
 		-- Emit the gun sound when you fire
-		
+
 		self:RecoilPower()
 
 	else
@@ -157,18 +157,18 @@ function SWEP:PrimaryAttack()
 end
 
 
-/*---------------------------------------------------------
-SecondaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- SecondaryAttack
+-----------------------------------------------------------
 function SWEP:SecondaryAttack()
 end
 
-/*---------------------------------------------------------
-Reload
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Reload
+-----------------------------------------------------------
 function SWEP:Reload()
 
-	if ( self.Reloadaftershoot > CurTime() ) then return end 
+	if ( self.Reloadaftershoot > CurTime() ) then return end
 	-- If you're firering, you can't reload
 
 	if not ValidEntity(self.Owner) then return end
@@ -191,9 +191,9 @@ function SWEP:Reload()
 	return true
 end
 
-/*---------------------------------------------------------
-Deploy
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Deploy
+-----------------------------------------------------------
 function SWEP:Deploy()
 	if self.data.silenced then
 		self.Weapon:SendWeaponAnim(ACT_VM_DRAW_SILENCED)
@@ -207,9 +207,9 @@ function SWEP:Deploy()
 	return true
 end
 
-/*---------------------------------------------------------
-ShootBullet
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- ShootBullet
+-----------------------------------------------------------
 function SWEP:CSShootBullet(dmg, recoil, numbul, cone)
 	numbul = numbul or 1
 	cone = cone or 0.01
@@ -241,9 +241,9 @@ function SWEP:CSShootBullet(dmg, recoil, numbul, cone)
 	fx:SetNormal(self.Owner:GetAimVector())
 	fx:SetAttachment(self.MuzzleAttachment)
 	util.Effect(self.MuzzleEffect,fx)						-- Additional muzzle effects
-	
+
 	timer.Simple( self.EjectDelay, function()
-		if  not IsFirstTimePredicted() then 
+		if  not IsFirstTimePredicted() then
 			return
 		end
 

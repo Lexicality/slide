@@ -12,7 +12,7 @@ if (SERVER) then
 	function SWEP:SetWeaponHoldType( t )
 
 		local index 								= ActIndex[ t ]
-			
+
 		if (index == nil) then
 			return
 		end
@@ -27,20 +27,20 @@ if (SERVER) then
 		self.ActivityTranslate [ ACT_HL2MP_GESTURE_RELOAD ] 		= index + 6
 		self.ActivityTranslate [ ACT_HL2MP_JUMP ] 			= index + 7
 		self.ActivityTranslate [ ACT_RANGE_ATTACK1 ] 			= index + 8
-	
+
 		self:SetupWeaponHoldTypeForAI( t )
 	end
 end
 
 if ( CLIENT ) then
-	SWEP.PrintName			= "KNIFE"	
+	SWEP.PrintName			= "KNIFE"
 	SWEP.Author				= "WORSHIPPER"
 	SWEP.DrawAmmo 			= false
 	SWEP.DrawCrosshair 		= false
 	SWEP.ViewModelFOV			= 65
 	SWEP.ViewModelFlip		= false
 	SWEP.CSMuzzleFlashes		= false
-	
+
 	SWEP.Slot				= 1
 	SWEP.SlotPos			= 1
 	SWEP.IconLetter			= "j"
@@ -64,7 +64,7 @@ SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 
 SWEP.ViewModel 				= "models/weapons/v_knife_t.mdl"
-SWEP.WorldModel 				= "models/weapons/w_knife_t.mdl" 
+SWEP.WorldModel 				= "models/weapons/w_knife_t.mdl"
 
 SWEP.Weight					= 5
 SWEP.AutoSwitchTo				= false
@@ -89,12 +89,12 @@ SWEP.DeploySound				= Sound("weapons/knife/knife_deploy1.wav")
 SWEP.IronSightsPos 			= Vector (-2.0423, -11.5056, 8.4193)
 SWEP.IronSightsAng 			= Vector (-63.4059, 40.5195, 0)
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function SWEP:Think()
 --[[
- if !self.Owner:KeyDown(IN_USE) then 
+ if  not self.Owner:KeyDown(IN_USE) then
 
  if self.Owner:KeyPressed(IN_RELOAD) then
 		self:SetIronsights(true)
@@ -118,25 +118,25 @@ end
 --]]
 end
 
-/*---------------------------------------------------------
-Initialize
----------------------------------------------------------*/
-function SWEP:Initialize() 
-   
- 	--if ( SERVER ) then 
- 		self:SetWeaponHoldType( self.HoldType ) 
- 	--end 
+-----------------------------------------------------------
+-- Initialize
+-----------------------------------------------------------
+function SWEP:Initialize()
+
+ 	--if ( SERVER ) then
+ 		self:SetWeaponHoldType( self.HoldType )
+ 	--end
 	util.PrecacheSound("weapons/iceaxe/iceaxe_swing1.wav")
 	util.PrecacheSound("weapons/knife/knife_hit1.wav")
 	util.PrecacheSound("weapons/knife/knife_hit2.wav")
 	util.PrecacheSound("weapons/knife/knife_hit3.wav")
-	util.PrecacheSound("weapons/knife/knife_hit4.wav")	 
+	util.PrecacheSound("weapons/knife/knife_hit4.wav")
 
- end 
+ end
 
-/*---------------------------------------------------------
-Deploy
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Deploy
+-----------------------------------------------------------
 function SWEP:Deploy()
 	self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
 	self.Weapon:SetNextPrimaryFire(CurTime() + 1)
@@ -144,9 +144,9 @@ function SWEP:Deploy()
 	return true
 end
 
-/*---------------------------------------------------------
-SecondaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- SecondaryAttack
+-----------------------------------------------------------
 function SWEP:SecondaryAttack()
 	self:PrimaryAttack();
 	--[[
@@ -187,9 +187,9 @@ function SWEP:SecondaryAttack()
 	--]]
 end
 
-/*---------------------------------------------------------
-PrimaryAttack
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PrimaryAttack
+-----------------------------------------------------------
 function SWEP:PrimaryAttack()
 
 	local tr = {}
@@ -214,7 +214,7 @@ function SWEP:PrimaryAttack()
 			bullet.Tracer = 0
 			bullet.Force  = 1
 			bullet.Damage = 50
-			self.Owner:FireBullets(bullet) 
+			self.Owner:FireBullets(bullet)
 			self.Weapon:EmitSound( "weapons/knife/knife_hit" .. math.random(1, 4) .. ".wav" )
 		else
 			self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
@@ -226,8 +226,8 @@ function SWEP:PrimaryAttack()
 			bullet.Tracer = 0
 			bullet.Force  = 1
 			bullet.Damage = 50
-			self.Owner:FireBullets(bullet) 
-			self.Weapon:EmitSound( self.WallSound )		
+			self.Owner:FireBullets(bullet)
+			self.Weapon:EmitSound( self.WallSound )
 			util.Decal("ManhackCut", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal)
 		end
 	else
@@ -236,48 +236,48 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-/*---------------------------------------------------------
-Reload
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Reload
+-----------------------------------------------------------
 function SWEP:Reload()
 
 	return false
 end
 
-/*---------------------------------------------------------
-OnRemove
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- OnRemove
+-----------------------------------------------------------
 function SWEP:OnRemove()
 
 return true
 end
 
-/*---------------------------------------------------------
-Holster
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Holster
+-----------------------------------------------------------
 function SWEP:Holster()
 
 	return true
 end
 
-/*---------------------------------------------------------
-ShootEffects
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- ShootEffects
+-----------------------------------------------------------
 function SWEP:ShootEffects()
 
 end
 
 local IRONSIGHT_TIME = 0.15
 
-/*---------------------------------------------------------
-GetViewModelPosition
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- GetViewModelPosition
+-----------------------------------------------------------
 function SWEP:GetViewModelPosition(pos, ang)
 	if (not self.IronSightsPos) then return pos, ang end
 
 	local bIron = self.Weapon:GetNWBool("Ironsights")
 
-	if (bIron != self.bLastIron) then
+	if (bIron ~= self.bLastIron) then
 		self.bLastIron = bIron
 		self.fIronTime = CurTime()
 
@@ -325,9 +325,9 @@ function SWEP:GetViewModelPosition(pos, ang)
 end
 
 
-/*---------------------------------------------------------
-SetIronsights
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- SetIronsights
+-----------------------------------------------------------
 function SWEP:SetIronsights(b)
 
 	self.Weapon:SetNetworkedBool("Ironsights", b)
@@ -340,9 +340,9 @@ end
 
 SWEP.NextSecondaryAttack = 0
 
-/*---------------------------------------------------------
-DrawWeaponSelection
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- DrawWeaponSelection
+-----------------------------------------------------------
 function SWEP:DrawWeaponSelection(x, y, wide, tall, alpha)
 
 	draw.SimpleText(self.IconLetter, "CSSelectIcons", x + wide / 2, y + tall * 0.2, Color(255, 210, 0, 255), TEXT_ALIGN_CENTER)

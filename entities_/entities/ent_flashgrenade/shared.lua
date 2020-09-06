@@ -5,9 +5,9 @@ local Endflash, Endflash2;
 
 if (CLIENT) then
 
-	/*---------------------------------------------------------
+	--[[---------------------------------------------------------
 	Initialize
-	---------------------------------------------------------*/
+	---------------------------------------------------------]]--
 	function ENT:Initialize()
 
 		local Pos = self:GetPos()
@@ -24,38 +24,38 @@ if (CLIENT) then
 				dynamicflash.Size = 1000
 				dynamicflash.Decay = 1000
 				dynamicflash.DieTime = CurTime() + 0.5
-			end 
+			end
 		end)
 	end
 
-	/*---------------------------------------------------------
+	--[[---------------------------------------------------------
 	Think
-	---------------------------------------------------------*/
+	---------------------------------------------------------]]--
 	function ENT:Think()
 	end
 
-	/*---------------------------------------------------------
+	--[[---------------------------------------------------------
 	Draw
-	---------------------------------------------------------*/
+	---------------------------------------------------------]]--
 	function ENT:Draw()
 
 		self.Entity:DrawModel()
 	end
 
-	/*---------------------------------------------------------
+	--[[---------------------------------------------------------
 	IsTranslucent
-	---------------------------------------------------------*/
+	---------------------------------------------------------]]--
 	function ENT:IsTranslucent()
 
 		return true
 	end
-	
+
 	function FlashEffect() if LocalPlayer():GetNetworkedFloat("FLASHED_END") > CurTime() then
 
 		local pl 			= LocalPlayer();
 		local FlashedEnd 		= pl:GetNetworkedFloat("FLASHED_END")
 		local FlashedStart 	= pl:GetNetworkedFloat("FLASHED_START")
-		
+
 		local Alpha
 
 		if(FlashedEnd - CurTime() > FLASHTIMER) then
@@ -64,19 +64,19 @@ if (CLIENT) then
 			local FlashAlpha = 1 - (CurTime() - (FlashedEnd - FLASHTIMER)) / (FlashedEnd - (FlashedEnd - FLASHTIMER));
 			Alpha = FlashAlpha * 150;
 		end
-		
+
 			surface.SetDrawColor(255, 255, 255, math.Round(Alpha))
 			surface.DrawRect(0, 0, surface.ScreenWidth(), surface.ScreenHeight())
-		end 
+		end
 	end
-	
+
 	hook.Add("HUDPaint", "FlashEffect", FlashEffect);
-	
+
 		local function StunEffect()
 		local pl 			= LocalPlayer();
 		local FlashedEnd 		= pl:GetNetworkedFloat("FLASHED_END")
 		local FlashedStart 	= pl:GetNetworkedFloat("FLASHED_START")
-	
+
 		if (FlashedEnd > CurTime() and FlashedEnd - EFFECT_DELAY - CurTime() <= FLASHTIMER) then
 			local FlashAlpha = 1 - (CurTime() - (FlashedEnd - FLASHTIMER)) / (FLASHTIMER);
 			DrawMotionBlur( 0, FlashAlpha / ((FLASHTIMER + EFFECT_DELAY) / (FLASHTIMER * 4)), 0);
@@ -87,32 +87,32 @@ if (CLIENT) then
 			DrawMotionBlur( 0, 0, 0);
 		end
 	end
-	
+
 	hook.Add( "RenderScreenspaceEffects", "StunEffect", StunEffect )
 end
 
 ENT.Type = "anim"
 
-/*---------------------------------------------------------
-OnRemove
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- OnRemove
+-----------------------------------------------------------
 function ENT:OnRemove()
 end
 
-/*---------------------------------------------------------
-PhysicsUpdate
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PhysicsUpdate
+-----------------------------------------------------------
 function ENT:PhysicsUpdate()
 end
 
-/*---------------------------------------------------------
-PhysicsCollide
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PhysicsCollide
+-----------------------------------------------------------
 function ENT:PhysicsCollide(data,phys)
 	if data.Speed > 50 then
 		self.Entity:EmitSound(Sound("Flashbang.Bounce"))
 	end
-	
+
 	local impulse = -data.Speed * data.HitNormal * .4 + (data.OurOldVelocity * -.6)
 	phys:ApplyForceCenter(impulse)
 end

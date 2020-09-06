@@ -4,9 +4,9 @@ AddCSLuaFile( "shared.lua" )
 
 include('shared.lua')
 
-/*---------------------------------------------------------
-Initialize
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Initialize
+-----------------------------------------------------------
 function ENT:Initialize()
 
 	self.Entity:SetModel("models/weapons/w_eq_fraggrenade.mdl")
@@ -14,25 +14,25 @@ function ENT:Initialize()
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 	self.Entity:SetSolid( SOLID_VPHYSICS )
 	self.Entity:DrawShadow( false )
-	
+
 	-- Don't collide with the player
 	self.Entity:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 	self.Entity:SetNetworkedString("Owner", "World")
-	
+
 	local phys = self.Entity:GetPhysicsObject()
-	
+
 	if (phys:IsValid()) then
 		phys:Wake()
 	end
-	
+
 	self.timer = CurTime() + 3
 end
 
 local exp
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function ENT:Think()
 	if self.timer < CurTime() then
 
@@ -43,25 +43,25 @@ function ENT:Think()
 	end
 end
 
-/*---------------------------------------------------------
-HitEffect
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- HitEffect
+-----------------------------------------------------------
 function ENT:HitEffect()
 	for k, v in pairs ( ents.FindInSphere( self.Entity:GetPos(), 600 ) ) do
-		if v:IsValid() && v:IsPlayer() then
-		end	
+		if v:IsValid() and v:IsPlayer() then
+		end
 	end
 end
 
-/*---------------------------------------------------------
-Explosion
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Explosion
+-----------------------------------------------------------
 function ENT:Explosion()
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin( self.Entity:GetPos() )
 	util.Effect( "HelicopterMegaBomb", effectdata )	 -- Big flame
-	
+
 	local explo = ents.Create( "env_explosion" )
 		explo:SetOwner( self.GrenadeOwner )
 		explo:SetPos( self.Entity:GetPos() )
@@ -69,8 +69,8 @@ function ENT:Explosion()
 		explo:Spawn()
 		explo:Activate()
 		explo:Fire( "Explode", "", 0 )
-	
-	
+
+
 	local shake = ents.Create( "env_shake" )
 		shake:SetOwner( self.Owner )
 		shake:SetPos( self.Entity:GetPos() )
@@ -82,7 +82,7 @@ function ENT:Explosion()
 		shake:Spawn()
 		shake:Activate()
 		shake:Fire( "StartShake", "", 0 )
-	
+
 	local ar2Explo = ents.Create( "env_ar2explosion" )
 		ar2Explo:SetOwner( self.GrenadeOwner )
 		ar2Explo:SetPos( self.Entity:GetPos() )
@@ -93,39 +93,39 @@ function ENT:Explosion()
 	for k, v in pairs ( ents.FindInSphere( self.Entity:GetPos(), 250 ) ) do
 		v:Fire( "EnableMotion", "", math.random( 0, 0.5 ) )
 	end
-	
+
 end
 
-/*---------------------------------------------------------
-OnTakeDamage
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- OnTakeDamage
+-----------------------------------------------------------
 function ENT:OnTakeDamage( dmginfo )
 end
 
 
-/*---------------------------------------------------------
-Use
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Use
+-----------------------------------------------------------
 function ENT:Use( activator, caller, type, value )
 end
 
 
-/*---------------------------------------------------------
-StartTouch
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- StartTouch
+-----------------------------------------------------------
 function ENT:StartTouch( entity )
 end
 
 
-/*---------------------------------------------------------
-EndTouch
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- EndTouch
+-----------------------------------------------------------
 function ENT:EndTouch( entity )
 end
 
 
-/*---------------------------------------------------------
-Touch
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Touch
+-----------------------------------------------------------
 function ENT:Touch( entity )
 end

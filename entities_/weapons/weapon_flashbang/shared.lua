@@ -1,5 +1,5 @@
 if (SERVER) then
-  
+
 	AddCSLuaFile ("shared.lua")
 	SWEP.Weight 			= 5
 	SWEP.AutoSwitchTo 		= false
@@ -46,16 +46,16 @@ SWEP.Secondary.DefaultClip 		= -1
 SWEP.Secondary.Automatic 		= true
 SWEP.Secondary.Ammo 			= "none"
 
-/*---------------------------------------------------------
-ThrowFar
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- ThrowFar
+-----------------------------------------------------------
 function SWEP:ThrowFar()
 
-	if self.Primed != 2 then return end
+	if self.Primed ~= 2 then return end
 
 	local tr = self.Owner:GetEyeTrace()
 
-	if (!SERVER) then return end
+	if ( not SERVER) then return end
 
 	local ent = ents.Create ("ent_flashgrenade")
 
@@ -102,16 +102,16 @@ function SWEP:ThrowFar()
 	end)
 end
 
-/*---------------------------------------------------------
-ThrowShort
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- ThrowShort
+-----------------------------------------------------------
 function SWEP:ThrowShort()
 
-	if self.Primed != 2 then return end
+	if self.Primed ~= 2 then return end
 
 	local tr = self.Owner:GetEyeTrace()
 
-	if (!SERVER) then return end
+	if ( not SERVER) then return end
 
 	local ent = ents.Create ("ent_flashgrenade")
 

@@ -14,9 +14,9 @@ if (CLIENT) then
 	SWEP.CSMuzzleFlashes		= true
 end
 
-/*---------------------------------------------------------
-Muzzle Effect + Shell Effect
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Muzzle Effect + Shell Effect
+-----------------------------------------------------------
 SWEP.MuzzleEffect			= "rg_muzzle_rifle" -- This is an extra muzzleflash effect
 -- Available muzzle effects: rg_muzzle_grenade, rg_muzzle_highcal, rg_muzzle_hmg, rg_muzzle_pistol, rg_muzzle_rifle, rg_muzzle_silenced, none
 
@@ -25,7 +25,7 @@ SWEP.ShellEffect			= "rg_shelleject_rifle" -- This is a shell ejection effect
 
 SWEP.MuzzleAttachment		= "1" -- Should be "1" for CSS models or "muzzle" for hl2 models
 SWEP.ShellEjectAttachment	= "2" -- Should be "2" for CSS models or "1" for hl2 models
-/*-------------------------------------------------------*/
+-----------------------------------------------------------
 
 SWEP.Base 				= "weapon_real_base"
 
@@ -48,9 +48,9 @@ SWEP.Secondary.DefaultClip 	= 0
 SWEP.Secondary.Automatic 	= false
 SWEP.Secondary.Ammo 		= "none"
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function SWEP:Think()
 
 	if (self:GetIronsights() == true) then

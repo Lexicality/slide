@@ -5,9 +5,9 @@ include("shared.lua")
 
 local FLASH_INTENSITY = 3000
 
-/*---------------------------------------------------------
-Initialize
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Initialize
+-----------------------------------------------------------
 function ENT:Initialize()
 
 	self.Entity:SetModel("models/weapons/w_eq_flashbang_thrown.mdl")
@@ -15,28 +15,28 @@ function ENT:Initialize()
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 	self.Entity:SetSolid( SOLID_VPHYSICS )
 	self.Entity:DrawShadow( false )
-	
+
 	-- Don't collide with the player
 	self.Entity:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 	self.Entity:SetNetworkedString("Owner", "World")
-	
+
 	local phys = self.Entity:GetPhysicsObject()
-	
+
 	if (phys:IsValid()) then
 		phys:Wake()
 	end
-	
+
 	timer.Simple(2,
 	function()
-		if self.Entity then 
-			self:Explode() 
+		if self.Entity then
+			self:Explode()
 		end
 	end)
 end
 
-/*---------------------------------------------------------
-Explode
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Explode
+-----------------------------------------------------------
 function ENT:Explode()
 
 	self.Entity:EmitSound(Sound("Flashbang.Explode"));
@@ -52,8 +52,8 @@ function ENT:Explode()
 		tracedata.filter = pl;
 		local tr = util.TraceLine(tracedata);
 
-		if (!tr.HitWorld) then
-			local dist = pl:GetShootPos():Distance( self.Entity:GetPos() )  
+		if ( not tr.HitWorld) then
+			local dist = pl:GetShootPos():Distance( self.Entity:GetPos() )
 			local endtime = FLASH_INTENSITY / (dist * 2);
 
 			if (endtime > 6) then
@@ -77,38 +77,38 @@ function ENT:Explode()
 	self.Entity:Remove();
 end
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function ENT:Think()
 end
 
-/*---------------------------------------------------------
-OnTakeDamage
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- OnTakeDamage
+-----------------------------------------------------------
 function ENT:OnTakeDamage()
 end
 
-/*---------------------------------------------------------
-Use
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Use
+-----------------------------------------------------------
 function ENT:Use()
 end
 
-/*---------------------------------------------------------
-StartTouch
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- StartTouch
+-----------------------------------------------------------
 function ENT:StartTouch()
 end
 
-/*---------------------------------------------------------
-EndTouch
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- EndTouch
+-----------------------------------------------------------
 function ENT:EndTouch()
 end
 
-/*---------------------------------------------------------
-Touch
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Touch
+-----------------------------------------------------------
 function ENT:Touch()
 end

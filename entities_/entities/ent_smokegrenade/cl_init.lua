@@ -1,22 +1,22 @@
 include('shared.lua')
 
-/*---------------------------------------------------------
-Initialize
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Initialize
+-----------------------------------------------------------
 function ENT:Initialize()
 
 	self.timer = CurTime() + 3
 end
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function ENT:Think()
 
 	self.SmokeTimer = self.SmokeTimer or 0
 
 	if ( self.SmokeTimer > CurTime() ) then return end
-	
+
 	self.SmokeTimer = CurTime() + 0.15
 
 	local vPos = Vector(math.Rand(-100, 100), math.Rand(-100, 100), 0);
@@ -24,7 +24,7 @@ function ENT:Think()
 	local vOffset = self.Entity:LocalToWorld( Vector(0, 0, self.Entity:OBBMins().z) )
 
 	local emitter = ParticleEmitter( vOffset )
-	
+
 	if self.timer < CurTime() then
 		local smoke = emitter:Add( "particle/particle_smokegrenade", vOffset + vPos )
 		smoke:SetVelocity(VectorRand() * math.Rand(100, 350))
@@ -43,19 +43,17 @@ function ENT:Think()
 	emitter:Finish()
 end
 
-/*---------------------------------------------------------
-Draw
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Draw
+-----------------------------------------------------------
 function ENT:Draw()
 	self.Entity:DrawModel()
 end
 
 
-/*---------------------------------------------------------
-IsTransluent
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- IsTransluent
+-----------------------------------------------------------
 function ENT:IsTranslucent()
 	return true
 end
-
-

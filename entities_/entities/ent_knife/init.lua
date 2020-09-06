@@ -3,11 +3,11 @@ AddCSLuaFile( "shared.lua" )
 
 include('shared.lua')
 
-/*---------------------------------------------------------
-Initialize
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Initialize
+-----------------------------------------------------------
 function ENT:Initialize()
-	
+
 	self:SetModel( "models/weapons/w_knife_t.mdl" )
 	self:PhysicsInit( SOLID_VPHYSICS )
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
@@ -27,44 +27,44 @@ function ENT:Initialize()
 	util.PrecacheSound("physics/flesh/flesh_impact_bullet2.wav")
 	util.PrecacheSound("physics/flesh/flesh_impact_bullet3.wav")
 
-	self.Hit = { 
+	self.Hit = {
 	Sound( "physics/metal/metal_grenade_impact_hard1.wav" ),
 	Sound( "physics/metal/metal_grenade_impact_hard2.wav" ),
 	Sound( "physics/metal/metal_grenade_impact_hard3.wav" ) };
-	self.FleshHit = { 
+	self.FleshHit = {
 	Sound( "physics/flesh/flesh_impact_bullet1.wav" ),
 	Sound( "physics/flesh/flesh_impact_bullet2.wav" ),
 	Sound( "physics/flesh/flesh_impact_bullet3.wav" ) }
 
-	self:GetPhysicsObject():SetMass( 2 )	
+	self:GetPhysicsObject():SetMass( 2 )
 end
 
-/*---------------------------------------------------------
-Think
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Think
+-----------------------------------------------------------
 function ENT:Think()
-	
+
 	self.lifetime = self.lifetime or CurTime() + 20
 	if CurTime() > self.lifetime then
 		self:Remove()
 	end
 end
 
-/*---------------------------------------------------------
-Disable
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Disable
+-----------------------------------------------------------
 function ENT:Disable()
 	self.PhysicsCollide = function() end
 	self.lifetime = CurTime() + 30
 end
 
-/*---------------------------------------------------------
-PhysicsCollided
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- PhysicsCollided
+-----------------------------------------------------------
 function ENT:PhysicsCollide( data, phys )
-	
+
 	local Ent = data.HitEntity
-	if !(ValidEntity( Ent ) || Ent:IsWorld()) then return end
+	if  not (ValidEntity( Ent ) or Ent:IsWorld()) then return end
 
 	if Ent:IsWorld() then
 			util.Decal( "ManhackCut", data.HitPos + data.HitNormal, data.HitPos - data.HitNormal )
@@ -72,14 +72,14 @@ function ENT:PhysicsCollide( data, phys )
 			self:Disable()
 
 	elseif Ent.Health then
-		if not(Ent:IsPlayer() || Ent:IsNPC() || Ent:GetClass() == "prop_ragdoll") then 
+		if not(Ent:IsPlayer() or Ent:IsNPC() or Ent:GetClass() == "prop_ragdoll") then
 			util.Decal( "ManhackCut", data.HitPos + data.HitNormal, data.HitPos - data.HitNormal )
 			self:EmitSound( self.Hit[math.random(1,#self.Hit)] );
 		end
 
 		Ent:TakeDamage( 100, self:GetOwner() )
 
-		if (Ent:IsPlayer() || Ent:IsNPC() || Ent:GetClass() == "prop_ragdoll") then 
+		if (Ent:IsPlayer() or Ent:IsNPC() or Ent:GetClass() == "prop_ragdoll") then
 			local effectdata = EffectData()
 			effectdata:SetStart( data.HitPos )
 			effectdata:SetOrigin( data.HitPos )
@@ -92,12 +92,12 @@ function ENT:PhysicsCollide( data, phys )
 	end
 
 	self.Entity:SetOwner( NUL )
-	
+
 end
 
-/*---------------------------------------------------------
-Use
----------------------------------------------------------*/
+-----------------------------------------------------------
+-- Use
+-----------------------------------------------------------
 function ENT:Use( activator, caller )
 	self.Entity:Remove()
 	if ( activator:IsPlayer() ) then
