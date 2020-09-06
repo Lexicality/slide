@@ -100,3 +100,18 @@ end
 function GM:GetFallDamage()
 	return 0
 end
+
+---
+--- @param ply GPlayer
+--- @param dmginfo GCTakeDamageInfo
+function GM:EntityTakeDamage(ply, dmginfo)
+	if not (IsValid(ply) and ply:IsPlayer() and ply:Alive()) then
+		return
+	end
+
+	if dmginfo:IsExplosionDamage() and dmginfo:GetDamage() < 100 then
+		-- Player just missed a mine. Play the explosion noise but don't actually damage them
+		dmginfo:SetDamage(1)
+		ply:SetHealth(ply:Health() + 1)
+	end
+end
