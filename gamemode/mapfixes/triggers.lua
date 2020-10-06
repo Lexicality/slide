@@ -82,11 +82,11 @@ function GM:CheckMapEnd(ply, dmginfo)
     return
   end
 
+  ply:SetHealth(ply:Health() + attacker.HealAmount)
+  
   if(attacker.HealAmount ~= 200)then
     return
   end
 
-  ply:SetHealth(ply:Health() + attacker.HealAmount)
-  
   ply._CheckIsFinishingMap = CurTime()
 end
