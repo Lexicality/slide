@@ -34,6 +34,7 @@ function GM:FixMap()
 	self:TryParentSpawnpoints()
 end
 
+GM.ServerSettings = GM.ServerSettings or {}
 GM.CSSSettings = {
 	sv_accelerate = 10,
 	sv_airaccelerate = 800,
@@ -43,9 +44,20 @@ GM.CSSSettings = {
 
 function GM:InitPostEntity()
 	for key, value in pairs(self.CSSSettings) do
+		-- Getting it as a string since it's safe for any datatype we may add to CSSSettings
+		local oldValue = GetConVar(key):GetString()
+		self.ServerSettings[key] = oldValue
+
 		game.ConsoleCommand(key .. " " .. value .. "\n")
 	end
 	self:FixMap()
+end
+
+function GM:ShutDown()
+	-- Reset the convars
+	for key, value in pairs(self.ServerSettings) do
+		game.ConsoleCommand(key .. " " .. value .. "\n")
+	end
 end
 
 function GM:PostCleanupMap()
