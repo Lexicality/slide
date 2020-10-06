@@ -31,6 +31,7 @@ function GM:FixMap()
 	self:MakeExplosionsRepeatable()
 end
 
+GM.ServerSettings = GM.ServerSettings or {}
 GM.CSSSettings = {
 	sv_accelerate = 10,
 	sv_airaccelerate = 800,
@@ -39,10 +40,18 @@ GM.CSSSettings = {
 }
 
 function GM:InitPostEntity()
-	for key, value in pairs(self.CSSSettings) do
-		game.ConsoleCommand(key .. " " .. value .. "\n")
+	for cvar, value in pairs(self.CSSSettings) do
+		self.ServerSettings[cvar] = cvars.String(cvar)
+		RunConsoleCommand(cvar, value)
 	end
 	self:FixMap()
+end
+
+function GM:ShutDown()
+	-- Reset the convars
+	for cvar, value in pairs(self.ServerSettings) do
+		RunConsoleCommand(cvar, value)
+	end
 end
 
 function GM:PostCleanupMap()
