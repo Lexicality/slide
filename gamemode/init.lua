@@ -27,8 +27,11 @@ include("mapfixes/entities.lua")
 include("mapfixes/triggers.lua")
 
 function GM:FixMap()
+	self:RemoveMapBlockers()
 	self:ReplaceTriggerOnces()
+	self:ModifyHealTriggers()
 	self:MakeExplosionsRepeatable()
+	self:TryParentSpawnpoints()
 end
 
 GM.CSSSettings = {
@@ -109,9 +112,18 @@ function GM:EntityTakeDamage(ply, dmginfo)
 		return
 	end
 
+	self:CheckMapEnd(ply, dmginfo)
+
 	if dmginfo:IsExplosionDamage() and dmginfo:GetDamage() < 100 then
 		-- Player just missed a mine. Play the explosion noise but don't actually damage them
 		dmginfo:SetDamage(1)
 		ply:SetHealth(ply:Health() + 1)
 	end
+end
+
+--- Called when a player finishes the map
+--- @param ply GPlayer
+--- @param finishedAt number The time (recorded CurTime) at which the player crossed the finishline (This hook is called several moments after it)
+function GM:SlidePlayerFinished(ply, finishedAt)
+	PrintMessage(HUD_PRINTTALK, ply:Nick() .. " has finished!")
 end
