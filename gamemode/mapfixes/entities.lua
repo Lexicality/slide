@@ -46,6 +46,12 @@ function GM:RemoveMapBlockers()
             ent:Remove()
         end
     end
+
+    for _, ent in pairs(ents.FindByClass("trigger_hurt")) do
+        if(ent:GetName() == "gumkiller")then
+            ent:Remove()
+        end
+    end    
 end
 
 local function findMoveLinearBeneath(entity)
