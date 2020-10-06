@@ -1,5 +1,5 @@
 --[[
-	Slide - gamemode/player_class/class_default.lua
+  Slide - gamemode/player_class/class_default.lua
 
     Copyright 2017 Lex Robinson
 
@@ -33,10 +33,10 @@ PLAYER.UnDuckSpeed       = 0.3       -- How fast to go from ducking, to not duck
 PLAYER.TeammateNoCollide = false
 
 function PLAYER:Loadout()
-	self.Player:RemoveAllAmmo()
+  self.Player:RemoveAllAmmo()
 
-	self.Player:GiveAmmo(256, "Pistol", true)
-	self.Player:Give("weapon_pistol")
+  self.Player:GiveAmmo(256, "Pistol", true)
+  self.Player:Give("weapon_pistol")
 end
 
 player_manager.RegisterClass("class_default", PLAYER, "player_default")
