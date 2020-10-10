@@ -46,6 +46,23 @@ function GM:ReplaceTriggerOnces()
   end
 end
 
+--- from: https://wiki.facepunch.com/gmod/ENTITY:TriggerOutput
+function GM:SetupTeleportHook()
+	MapLua = IsValid(MapLua) and MapLua or ents.Create("lua_run")
+	MapLua:SetName("triggerhook")
+	MapLua:Spawn()
+
+	for _, teleport in pairs(ents.FindByClass("trigger_teleport"))do
+		teleport:Fire("AddOutput", "OnStartTouch triggerhook:RunPassedCode:hook.Run('RawOnTeleport'):0:-1")
+	end
+end
+
+hook.Add("RawOnTeleport", "RawOnTeleportConvertToProperHookCall", function()
+	local activator, caller = ACTIVATOR, CALLER
+  
+  gamemode.Call("OnPlayerTeleport", activator, caller)
+end)
+
 function GM:ModifyHealTriggers()
   for _, trigger in ipairs(ents.FindByClass("trigger_hurt"))do
     local damage = trigger:GetInternalVariable("damage")
@@ -60,33 +77,47 @@ end
 function GM:CheckMapEnd(ply, dmginfo)
   local attacker = dmginfo:GetAttacker()
 
-  if(not IsValid(attacker) or attacker:GetClass() ~= "trigger_hurt")then
-    print(attacker:GetClass())
-  
-    return
+  if(not IsValid(attacker) or attacker:GetClass() ~= "trigger_hurt")then  
+    return false
   end
 
   local damage = dmginfo:GetDamage()
 
   if(damage ~= 0)then
     if(attacker:GetInternalVariable("damage") ~= 100)then
-      return
+      return false
     end
 
     if(not ply._CheckIsFinishingMap or CurTime() - ply._CheckIsFinishingMap > END_CHECK_INTERVAL)then
       print"too late since finish and hurt 100"
-      return
+      return false
     end
 
     gamemode.Call("SlidePlayerFinished", ply, ply._CheckIsFinishingMap)
-    return
+    return true
   end
 
   ply:SetHealth(ply:Health() + attacker.HealAmount)
   
   if(attacker.HealAmount ~= 200)then
-    return
+    return false
   end
 
   ply._CheckIsFinishingMap = CurTime()
+
+  return false
+end
+
+function GM:CheckMapTeleportEnd(ply, teleporter)
+  local target = teleporter:GetInternalVariable("target")
+  local map = game.GetMap()
+
+  if(map == "slide_city_remake")then
+    if(target == "info_teleport_destination")then
+      gamemode.Call("SlidePlayerFinished", ply, CurTime())
+      return true
+    end
+
+    return false
+  end
 end
