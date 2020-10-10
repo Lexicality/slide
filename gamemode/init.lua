@@ -26,12 +26,15 @@ include("meta_ply.lua")
 include("mapfixes/entities.lua")
 include("mapfixes/triggers.lua")
 
+include("rounds.lua")
+
 function GM:FixMap()
 	self:RemoveMapBlockers()
 	self:ReplaceTriggerOnces()
 	self:ModifyHealTriggers()
 	self:MakeExplosionsRepeatable()
 	self:TryParentSpawnpoints()
+	self:SetupTeleportHook()
 end
 
 GM.ServerSettings = GM.ServerSettings or {}
@@ -74,6 +77,8 @@ function GM:PlayerSpawn(ply)
 	BaseClass.PlayerSpawn(self, ply)
 
 	ply:CreateRunData()
+
+	self:JoinRound(ply)
 end
 
 function GM:DoPlayerDeath(ply, ...)
@@ -92,6 +97,10 @@ function GM:DoPlayerDeath(ply, ...)
 	-- end
 end
 
+function GM:PostPlayerDeath(ply)
+	self:CheckRoundEnd()
+end
+
 function GM:PlayerSilentDeath(ply)
 	BaseClass.PlayerSilentDeath(self, ply)
 
@@ -101,6 +110,15 @@ function GM:PlayerSilentDeath(ply)
 		-- TODO: Do we want to keep rundata that results in a Lua based death? Presumably not
 		-- rd:Remove()
 	end
+end
+
+--- Do not allow respawning by pressing space or clicking unless we only played last round
+function GM:PlayerDeathThink(ply)
+	if(ply.RoundNumber and ply.RoundNumber == self.Round)then
+		return false
+	end
+
+	BaseClass.PlayerDeathThink(self, ply)
 end
 
 function GM:Think()
@@ -133,9 +151,29 @@ function GM:EntityTakeDamage(ply, dmginfo)
 	end
 end
 
+--- Called when a player leaves the server. 
+--- Player:SteamID, Player:SteamID64, and the like can return nil here.
+--- This is not called in single-player or listen servers for the host.
+function GM:PlayerDisconnected(ply)
+	PrintMessage(HUD_PRINTTALK, ply:Name().. " has left the server.")
+
+	ply:SetTeam(TEAM_SPECTATOR)
+
+	self:CheckRoundEnd()
+end
+
 --- Called when a player finishes the map
 --- @param ply GPlayer
 --- @param finishedAt number The time (recorded CurTime) at which the player crossed the finishline (This hook is called several moments after it)
 function GM:SlidePlayerFinished(ply, finishedAt)
 	PrintMessage(HUD_PRINTTALK, ply:Nick() .. " has finished!")
+
+	self:PlayerFinishedRound(ply)
+end
+
+--- Called when a player teleports
+function GM:OnPlayerTeleport(ply, teleporter)
+	print("teleport", ply, teleporter)
+
+	self:CheckMapTeleportEnd(ply, teleporter)
 end

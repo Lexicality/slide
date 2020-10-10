@@ -34,6 +34,8 @@ MsgN("Slide!")
 TEAM_RED  = 2
 TEAM_BLUE = 3
 
+GM.PlayingTeams = { TEAM_RED, TEAM_BLUE }
+
 function GM:CreateTeams()
 	team.SetUp(TEAM_RED, "Team Red", Color(255, 75, 67))
 	team.SetUp(TEAM_BLUE, "Team Blue", Color(39, 186, 255))
