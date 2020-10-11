@@ -1,7 +1,7 @@
 --[[
 	Slide - gamemode/player_class/class_default.lua
 
-    Copyright 2017 Lex Robinson
+    Copyright 2017-2020 Lex Robinson
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
