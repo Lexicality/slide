@@ -122,17 +122,16 @@ function GM:EntityTakeDamage(ply, dmginfo)
 		return
 	end
 
-	local inflictor = dmginfo:GetInflictor()
-	if IsValid(inflictor) and inflictor:GetClass() == "trigger_hurt" and
-		inflictor._IS_HEAL then
-		-- TODO: Should this clamp?
-		ply:SetHealth(ply:Health() + dmginfo:GetDamage())
-		dmginfo:SetDamage(0)
-	end
-
 	if dmginfo:IsExplosionDamage() and dmginfo:GetDamage() < 100 then
 		-- Player just missed a mine. Play the explosion noise but don't actually damage them
 		dmginfo:SetDamage(1)
 		ply:SetHealth(ply:Health() + 1)
 	end
+end
+
+--- @param ply GPlayer
+--- @param amount number
+--- @param ent GEntity
+function GM:MapHealPlayer(ply, amount, ent)
+	ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + amount))
 end

@@ -59,6 +59,19 @@ function ENT:AcceptInput(name, activator, caller, value)
 		return true
 	end
 
+	if name == "HealPlayer" then
+		local healAmount = tonumber(value)
+		if not healAmount then
+			print("ERROR: " .. caller .. " has invalid heal amount " .. value .. "!")
+			return true
+		end
+
+		if IsValid(activator) and activator:IsPlayer() then
+			gamemode.Call("MapHealPlayer", activator, healAmount, caller)
+		end
+		return true
+	end
+
 	return false
 end
 

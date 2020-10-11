@@ -48,9 +48,15 @@ function GM:ModifyHealTriggers()
 		local damage = trigger:GetInternalVariable("damage")
 
 		if (damage < 0) then
-			damage = math.abs(damage)
-			trigger:SetKeyValue("damage", damage)
-			trigger._IS_HEAL = true
+			-- Prevent anything weird happening in the future
+			trigger:SetKeyValue("damage", 0)
+			-- The damage keyvalue is per second, but `trigger_hurt` fires twice
+			-- a second so we need to divide it by 2
+			damage = math.abs(damage) / 2
+			trigger:Fire(
+				"AddOutput",
+				"OnHurtPlayer slide_map_controller:HealPlayer:" .. damage .. ":0:-1"
+			)
 		end
 	end
 end
