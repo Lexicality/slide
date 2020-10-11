@@ -29,6 +29,7 @@ include("mapfixes/triggers.lua")
 function GM:FixMap()
 	self:RemoveMapBlockers()
 	self:ReplaceTriggerOnces()
+	self:ModifyHealTriggers()
 	self:MakeExplosionsRepeatable()
 	self:TryParentSpawnpoints()
 end
@@ -118,6 +119,14 @@ end
 function GM:EntityTakeDamage(ply, dmginfo)
 	if not (IsValid(ply) and ply:IsPlayer() and ply:Alive()) then
 		return
+	end
+
+	local inflictor = dmginfo:GetInflictor()
+	if IsValid(inflictor) and inflictor:GetClass() == "trigger_hurt" and
+		inflictor._IS_HEAL then
+		-- TODO: Should this clamp?
+		ply:SetHealth(ply:Health() + dmginfo:GetDamage())
+		dmginfo:SetDamage(0)
 	end
 
 	if dmginfo:IsExplosionDamage() and dmginfo:GetDamage() < 100 then

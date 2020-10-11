@@ -42,3 +42,15 @@ function GM:ReplaceTriggerOnces()
 		replaceTrigger(ent)
 	end
 end
+
+function GM:ModifyHealTriggers()
+	for _, trigger in ipairs(ents.FindByClass("trigger_hurt")) do
+		local damage = trigger:GetInternalVariable("damage")
+
+		if (damage < 0) then
+			damage = math.abs(damage)
+			trigger:SetKeyValue("damage", damage)
+			trigger._IS_HEAL = true
+		end
+	end
+end
