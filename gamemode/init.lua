@@ -27,6 +27,7 @@ include("mapfixes/entities.lua")
 include("mapfixes/triggers.lua")
 
 function GM:FixMap()
+	self:RemoveMapBlockers()
 	self:ReplaceTriggerOnces()
 	self:MakeExplosionsRepeatable()
 	self:TryParentSpawnpoints()

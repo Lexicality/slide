@@ -32,6 +32,28 @@ function GM:MakeExplosionsRepeatable()
 	end
 end
 
+function GM:RemoveMapBlockers()
+	for _, ent in pairs(ents.FindByClass("func_wall")) do
+		if (ent:GetName() == "gumpprotect") then
+			ent:Remove()
+		end
+	end
+
+	for _, ent in pairs(ents.FindByClass("func_brush")) do
+		local name = ent:GetName()
+
+		if (name == "gumblocker" or name == "noobweg") then
+			ent:Remove()
+		end
+	end
+
+	for _, ent in pairs(ents.FindByClass("trigger_hurt")) do
+		if (ent:GetName() == "gumkiller") then
+			ent:Remove()
+		end
+	end
+end
+
 local function findMoveLinearBeneath(entity)
 	local tr = util.TraceLine(
 		{
