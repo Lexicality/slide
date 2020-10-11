@@ -14,8 +14,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-]]--
-
+]] --
 DEFINE_BASECLASS "player_default"
 AddCSLuaFile()
 
@@ -24,12 +23,12 @@ local PLAYER = {}
 --
 -- See gamemodes/base/player_class/player_default.lua for all overridable variables
 --
-PLAYER.DisplayName       = "Player"
-PLAYER.WalkSpeed         = 250
-PLAYER.RunSpeed          = 250
-PLAYER.CrouchedWalkSpeed = 0.34	     -- Multiply move speed by this when crouching
-PLAYER.DuckSpeed         = 0.3       -- How fast to go from not ducking, to ducking
-PLAYER.UnDuckSpeed       = 0.3       -- How fast to go from ducking, to not ducking
+PLAYER.DisplayName = "Player"
+PLAYER.WalkSpeed = 250
+PLAYER.RunSpeed = 250
+PLAYER.CrouchedWalkSpeed = 0.34 -- Multiply move speed by this when crouching
+PLAYER.DuckSpeed = 0.3 -- How fast to go from not ducking, to ducking
+PLAYER.UnDuckSpeed = 0.3 -- How fast to go from ducking, to not ducking
 PLAYER.TeammateNoCollide = false
 
 function PLAYER:Loadout()
@@ -40,8 +39,6 @@ function PLAYER:Loadout()
 end
 
 player_manager.RegisterClass("class_default", PLAYER, "player_default")
-
-
 
 -- local CLASS = {}
 

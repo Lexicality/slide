@@ -14,14 +14,14 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-]]--
+]] --
 DEFINE_BASECLASS "gamemode_base"
 
 function GM:EntityKeyValue(ent, key, value)
-    BaseClass.EntityKeyValue(self, ent, key, value)
+	BaseClass.EntityKeyValue(self, ent, key, value)
 	-- Sometimes we need to replace entities, so store everything we can about them.
 	ent.kvs = ent.kvs or {} -- TODO: Drop this on EntityCreated?
-	table.insert(ent.kvs, { key, value })
+	table.insert(ent.kvs, {key, value})
 end
 
 function GM:MakeExplosionsRepeatable()

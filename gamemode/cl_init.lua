@@ -14,10 +14,10 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-]]--
+]] --
 DEFINE_BASECLASS "gamemode_base"
 
-include('shared.lua')
+include("shared.lua")
 
 -- hook.Remove("HUDPaint", "paintsprites")
 
@@ -36,10 +36,17 @@ function GM:Think()
 	local lpl = LocalPlayer()
 
 	local i = 5
-	DebugInfo(i, "GetAbsVelocity: " .. tostring(lpl:GetAbsVelocity())) i = i + 1
-	DebugInfo(i, "GetBaseVelocity: " .. tostring(lpl:GetBaseVelocity())) i = i + 1
-	DebugInfo(i, "GetVelocity: " .. tostring(lpl:GetVelocity())) i = i + 1
-	DebugInfo(i, "Total Velocity: " .. tostring(lpl:GetBaseVelocity() + lpl:GetAbsVelocity())) i = i + 1
+	DebugInfo(i, "GetAbsVelocity: " .. tostring(lpl:GetAbsVelocity()))
+	i = i + 1
+	DebugInfo(i, "GetBaseVelocity: " .. tostring(lpl:GetBaseVelocity()))
+	i = i + 1
+	DebugInfo(i, "GetVelocity: " .. tostring(lpl:GetVelocity()))
+	i = i + 1
+	DebugInfo(
+		i,
+		"Total Velocity: " .. tostring(lpl:GetBaseVelocity() + lpl:GetAbsVelocity())
+	)
+	i = i + 1
 
 	-- SetAbsVelocity
 	-- SetLocalVelocity
