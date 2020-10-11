@@ -31,3 +31,32 @@ function GM:MakeExplosionsRepeatable()
 		ent:SetKeyValue("spawnflags", spawnflags)
 	end
 end
+
+local function findMoveLinearBeneath(entity)
+	local tr = util.TraceLine(
+		{
+			start = entity:GetPos(),
+			endpos = entity:GetPos() - Vector(0, 0, 512),
+			filter = function(ent)
+				if (ent:GetClass() == "func_movelinear") then
+					return true
+				end
+			end,
+		}
+	)
+
+	return tr.Entity
+end
+
+function GM:TryParentSpawnpoints()
+	for _, ent in pairs(ents.FindByClass("info_player_*")) do
+		local moveLinear = findMoveLinearBeneath(ent)
+
+		if (not IsValid(moveLinear)) then
+			-- Don't waste time checking every spawnpoint, if the first one doesn't have a move linear beneath it, none do.
+			return
+		end
+
+		ent:SetParent(moveLinear)
+	end
+end

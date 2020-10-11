@@ -29,6 +29,7 @@ include("mapfixes/triggers.lua")
 function GM:FixMap()
 	self:ReplaceTriggerOnces()
 	self:MakeExplosionsRepeatable()
+	self:TryParentSpawnpoints()
 end
 
 GM.ServerSettings = GM.ServerSettings or {}
