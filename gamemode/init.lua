@@ -27,6 +27,7 @@ include("mapfixes/entities.lua")
 include("mapfixes/triggers.lua")
 
 function GM:FixMap()
+	self:CreateMapController()
 	self:RemoveMapBlockers()
 	self:ReplaceTriggerOnces()
 	self:ModifyHealTriggers()
