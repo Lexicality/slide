@@ -32,23 +32,50 @@ function GM:MakeExplosionsRepeatable()
 	end
 end
 
+GM.BadMapEnts = {
+	slide_bounce_f1 = {
+		-- Big wall across spawn
+		"gumpprotect",
+		-- Invisible wall afterwards
+		"gumblocker",
+		-- Second invisible wall after the first one
+		"noobweg",
+		-- trigger_kill in spawn, only activates once one player has finished
+		"afkkiller",
+	},
+	slide_shoxx_vs_nitro_f2 = {
+		-- Big wall across spawn
+		"gumpprotect",
+		-- Invisible wall afterwards
+		"gumblocker",
+		-- Second invisible wall after the first one
+		"noobweg",
+		-- trigger_kill in spawn, only activates once one player has finished
+		"afkkiller",
+	},
+	slide_speedrace_v4_1v1_f3 = {
+		-- Small wall across spawns
+		"gumpprotect",
+		-- Kill zone immediately after the wall
+		"gumkiller",
+		-- Invisible wall afterwards
+		"gumblocker",
+		-- Second invisible wall after the first one
+		"noobweg",
+		-- trigger_kill in spawn, only activates once one player has finished
+		"afk_killer",
+		"afk_killer2",
+	},
+}
+
 function GM:RemoveMapBlockers()
-	for _, ent in pairs(ents.FindByClass("func_wall")) do
-		if (ent:GetName() == "gumpprotect") then
-			ent:Remove()
-		end
+	local badEnts = self.BadMapEnts[game.GetMap()]
+	if not badEnts then
+		return
 	end
 
-	for _, ent in pairs(ents.FindByClass("func_brush")) do
-		local name = ent:GetName()
-
-		if (name == "gumblocker" or name == "noobweg") then
-			ent:Remove()
-		end
-	end
-
-	for _, ent in pairs(ents.FindByClass("trigger_hurt")) do
-		if (ent:GetName() == "gumkiller") then
+	for _, name in ipairs(badEnts) do
+		for _, ent in ipairs(ents.FindByName(name)) do
 			ent:Remove()
 		end
 	end
