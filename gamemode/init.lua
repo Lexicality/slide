@@ -123,10 +123,26 @@ function GM:EntityTakeDamage(ply, dmginfo)
 	end
 
 	if dmginfo:IsExplosionDamage() and dmginfo:GetDamage() < 100 then
-		-- Player just missed a mine. Play the explosion noise but don't actually damage them
-		dmginfo:SetDamage(1)
-		ply:SetHealth(ply:Health() + 1)
+		-- Either a) the player just missed a mine or b) this map uses multiple weak mines
+		-- We want the player to be either alive or dead, not wounded so negate
+		-- the mine damage but keep a record of it in case there are multiple
+		-- blasts
+		local damage = dmginfo:GetDamage()
+		local exstingDamage = ply._tempDamage or 0
+		local totalDamage = damage + exstingDamage
+		if totalDamage < ply:Health() then
+			ply._tempDamage = totalDamage
+			dmginfo:SetDamage(1)
+			ply:SetHealth(ply:Health() + 1)
+		else
+			dmginfo:SetDamage(totalDamage)
+		end
 	end
+end
+
+--- @param ply GPlayer
+function GM:PlayerPostThink(ply)
+	ply._tempDamage = 0
 end
 
 --- @param ply GPlayer
