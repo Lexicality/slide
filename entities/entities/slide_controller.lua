@@ -59,16 +59,21 @@ function ENT:AcceptInput(name, activator, caller, value)
 		return false
 	end
 
+	-- All our remaining events are player driven
+	if not IsValid(activator) and activator:IsPlayer() then
+		return false
+	end
+	--- @type GPlayer
+	local ply = activator
+
 	if name == "healplayer" then
 		local healAmount = tonumber(value)
 		if not healAmount then
 			print("ERROR: " .. caller .. " has invalid heal amount " .. value .. "!")
-			return true
+			return false
 		end
 
-		if IsValid(activator) and activator:IsPlayer() then
-			gamemode.Call("MapHealPlayer", activator, healAmount, caller)
-		end
+		gamemode.Call("MapHealPlayer", ply, healAmount, caller)
 		return true
 	end
 
