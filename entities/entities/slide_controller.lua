@@ -38,9 +38,7 @@ function ENT:KeyValue(key, value)
 		BaseClass.KeyValue(self, key, value)
 	end
 
-	if self:SetNetworkKeyValue(key, value) then
-		return
-	elseif self:AddOutputFromKeyValue(key, value) then
+	if self:AddOutputFromKeyValue(key, value) then
 		return
 	end
 end
@@ -55,11 +53,13 @@ function ENT:AcceptInput(name, activator, caller, value)
 		return true
 	end
 
-	if self:AddOutputFromAcceptInput(name, value) then
-		return true
+	name = string.lower(name)
+	if name == "addoutput" then
+		-- The game will automatically turn this into a keyvalue if we don't handle it
+		return false
 	end
 
-	if name == "HealPlayer" then
+	if name == "healplayer" then
 		local healAmount = tonumber(value)
 		if not healAmount then
 			print("ERROR: " .. caller .. " has invalid heal amount " .. value .. "!")
@@ -78,7 +78,7 @@ end
 --- @param key string
 --- @param value string
 function ENT:AddOutputFromKeyValue(key, value)
-	if key:sub(1, 2) == "On" then
+	if key:lower():sub(1, 2) == "on" then
 		self:StoreOutput(key, value)
 		return true
 	end
@@ -86,22 +86,12 @@ function ENT:AddOutputFromKeyValue(key, value)
 	return false
 end
 
---- @param name string
---- @param value string
-function ENT:AddOutputFromAcceptInput(name, value)
-	if name ~= "AddOutput" then
-		return false
-	end
+function ENT:StoreOutput(name, ...)
+	name = string.lower(name)
+	return BaseClass.StoreOutput(self, name, ...)
+end
 
-	local pos = string.find(value, " ", 1, true)
-	if pos == nil then
-		return false
-	end
-
-	name, value = value:sub(1, pos - 1), value:sub(pos + 1)
-
-	-- This is literally KeyValue but as an input and with ,s as :s.
-	value = value:gsub(":", ",")
-
-	return self:AddOutputFromKeyValue(name, value)
+function ENT:TriggerOutput(name, ...)
+	name = string.lower(name)
+	return BaseClass.TriggerOutput(self, name, ...)
 end
