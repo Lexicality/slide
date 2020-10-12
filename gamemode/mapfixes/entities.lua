@@ -113,10 +113,12 @@ end
 function GM:CreateMapController()
 	local ent = ents.FindByName("slide_map_controller")
 	if IsValid(ent) then
+		self.mapController = ent;
 		return
 	end
 	ent = ents.Create("slide_controller")
 	ent:SetName("slide_map_controller")
 	ent:Spawn()
 	ent:Activate()
+	self.mapController = ent;
 end
