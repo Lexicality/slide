@@ -21,6 +21,7 @@ AddCSLuaFile("cl_init.lua")
 
 include("shared.lua")
 
+include("meta_entity.lua")
 include("meta_ply.lua")
 
 include("mapfixes/entities.lua")
@@ -33,6 +34,7 @@ function GM:FixMap()
 	self:ModifyHealTriggers()
 	self:MakeExplosionsRepeatable()
 	self:TryParentSpawnpoints()
+	self:SetupTriggerDebugs()
 end
 
 GM.ServerSettings = GM.ServerSettings or {}

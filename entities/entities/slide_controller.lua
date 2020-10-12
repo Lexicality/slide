@@ -72,8 +72,18 @@ function ENT:AcceptInput(name, activator, caller, value)
 			print("ERROR: " .. caller .. " has invalid heal amount " .. value .. "!")
 			return false
 		end
+		print("Healed!", ply, caller, caller:MapCreationID())
 
 		gamemode.Call("MapHealPlayer", ply, healAmount, caller)
+		return true
+	elseif name == "debugstartpush" then
+		print("PUSH!", ply, caller, caller:MapCreationID())
+		return true
+	elseif name == "debugtrigger" then
+		print("Trigger!", ply, caller, caller:MapCreationID())
+		return true
+	elseif name == "debugtele" then
+		print("Teleported!", ply, caller, caller:MapCreationID())
 		return true
 	end
 

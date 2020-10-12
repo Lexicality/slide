@@ -60,3 +60,15 @@ function GM:ModifyHealTriggers()
 		end
 	end
 end
+
+function GM:SetupTriggerDebugs()
+	for _, ent in ipairs(ents.FindByClass("trigger_push")) do
+		ent:AddOutput("OnStartTouch", "slide_map_controller", "DebugStartPush")
+	end
+	for _, ent in ipairs(ents.FindByClass("trigger_multiple")) do
+		ent:AddOutput("OnTrigger", "slide_map_controller", "DebugTrigger")
+	end
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do
+		ent:AddOutput("OnStartTouch", "slide_map_controller", "DebugTele")
+	end
+end
