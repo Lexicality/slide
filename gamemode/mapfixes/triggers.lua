@@ -61,6 +61,30 @@ function GM:ModifyHealTriggers()
 	end
 end
 
+function GM:AttachMapTriggers()
+	local mapdata = self.MapData[game.GetMap()]
+
+	if not mapdata then
+		return
+	end
+
+	for _, ent in ipairs(ents.FindByMagicTarget(mapdata.FirstPush)) do
+		ent:AddOutput("OnStartTouch", "slide_map_controller", "StartRun")
+	end
+
+	for _, ent in ipairs(ents.FindByMagicTarget(mapdata.LastBrush)) do
+		if mapdata.LastType == "push" then
+			ent:AddOutput("OnEndTouch", "slide_map_controller", "CompleteRun")
+		else
+			ent:AddOutput("OnStartTouch", "slide_map_controller", "CompleteRun")
+		end
+	end
+
+	for _, ent in ipairs(ents.FindByMagicTarget(mapdata.RestartTriggers)) do
+		ent:AddOutput("OnStartTouch", "slide_map_controller", "RestartRun")
+	end
+end
+
 function GM:SetupTriggerDebugs()
 	for _, ent in ipairs(ents.FindByClass("trigger_push")) do
 		ent:AddOutput("OnStartTouch", "slide_map_controller", "DebugStartPush")

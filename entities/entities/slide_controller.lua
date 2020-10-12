@@ -76,6 +76,25 @@ function ENT:AcceptInput(name, activator, caller, value)
 
 		gamemode.Call("MapHealPlayer", ply, healAmount, caller)
 		return true
+	elseif name == "startrun" then
+		-- Ideally called by the first trigger_push
+		gamemode.Call("PlayerStartRun", ply)
+		return true
+	elseif name == "completerun" then
+		-- Ideally called by a trigger_hurt in the complete area (or a
+		--  teleporter) but can be called by `OnEndTouch` of the last
+		--  trigger_push in dire circumstances
+		if ply:Alive() then
+			gamemode.Call("PlayerCompleteRun", ply)
+		end
+		return true
+	elseif name == "restartrun" then
+		-- Called when a player teleports into a spawn point (theirs or enemies)
+		--  from the completion area
+		-- NOTE: If the restart teleporter puts the player straight into the
+		--  first trigger_push, don't bother calling this!
+		gamemode.Call("PlayerRestartRun", ply)
+		return true
 	elseif name == "debugstartpush" then
 		print("PUSH!", ply, caller, caller:MapCreationID())
 		return true

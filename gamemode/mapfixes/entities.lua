@@ -40,6 +40,7 @@ function GM:RemoveMapBlockers()
 	end
 
 	for _, ent in ipairs(ents.FindByMagicTarget(mapdata.ToRemove)) do
+		print("REMOVING", ent, ent:GetName())
 		ent:Remove()
 	end
 end

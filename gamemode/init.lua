@@ -42,6 +42,7 @@ function GM:FixMap()
 	self:ModifyHealTriggers()
 	self:MakeExplosionsRepeatable()
 	self:TryParentSpawnpoints()
+	self:AttachMapTriggers()
 	self:SetupTriggerDebugs()
 end
 
@@ -160,4 +161,19 @@ end
 --- @param ent GEntity
 function GM:MapHealPlayer(ply, amount, ent)
 	ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + amount))
+end
+
+--- @param ply GPlayer
+function GM:PlayerStartRun(ply)
+	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Just started a run!")
+end
+
+--- @param ply GPlayer
+function GM:PlayerCompleteRun(ply)
+	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Just finished!")
+end
+
+--- @param ply GPlayer
+function GM:PlayerRestartRun(ply)
+	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Started again!")
 end

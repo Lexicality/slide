@@ -9,4 +9,8 @@ GM.MapData["slide_bounce_f1"] = {
 		-- trigger_kill in spawn, only activates once one player has finished
 		"afkkiller",
 	},
+	FirstPush = {1326},
+	LastBrush = {2258},
+	LastType = "heal",
+	RestartTriggers = {},
 }
