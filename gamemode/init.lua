@@ -21,8 +21,16 @@ AddCSLuaFile("cl_init.lua")
 
 include("shared.lua")
 
+include("utils.lua")
+
 include("meta_entity.lua")
 include("meta_ply.lua")
+
+GM.MapData = {}
+
+for _, filename in ipairs(file.Find("slide/gamemode/mapdata/*.lua", "LUA")) do
+	include("slide/gamemode/mapdata/" .. filename)
+end
 
 include("mapfixes/entities.lua")
 include("mapfixes/triggers.lua")

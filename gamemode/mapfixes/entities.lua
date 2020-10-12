@@ -32,52 +32,15 @@ function GM:MakeExplosionsRepeatable()
 	end
 end
 
-GM.BadMapEnts = {
-	slide_bounce_f1 = {
-		-- Big wall across spawn
-		"gumpprotect",
-		-- Invisible wall afterwards
-		"gumblocker",
-		-- Second invisible wall after the first one
-		"noobweg",
-		-- trigger_kill in spawn, only activates once one player has finished
-		"afkkiller",
-	},
-	slide_shoxx_vs_nitro_f2 = {
-		-- Big wall across spawn
-		"gumpprotect",
-		-- Invisible wall afterwards
-		"gumblocker",
-		-- Second invisible wall after the first one
-		"noobweg",
-		-- trigger_kill in spawn, only activates once one player has finished
-		"afkkiller",
-	},
-	slide_speedrace_v4_1v1_f3 = {
-		-- Small wall across spawns
-		"gumpprotect",
-		-- Kill zone immediately after the wall
-		"gumkiller",
-		-- Invisible wall afterwards
-		"gumblocker",
-		-- Second invisible wall after the first one
-		"noobweg",
-		-- trigger_kill in spawn, only activates once one player has finished
-		"afk_killer",
-		"afk_killer2",
-	},
-}
-
 function GM:RemoveMapBlockers()
-	local badEnts = self.BadMapEnts[game.GetMap()]
-	if not badEnts then
+	local mapdata = self.MapData[game.GetMap()]
+
+	if not mapdata then
 		return
 	end
 
-	for _, name in ipairs(badEnts) do
-		for _, ent in ipairs(ents.FindByName(name)) do
-			ent:Remove()
-		end
+	for _, ent in ipairs(ents.FindByMagicTarget(mapdata.ToRemove)) do
+		ent:Remove()
 	end
 end
 
