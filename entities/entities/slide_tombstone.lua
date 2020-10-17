@@ -35,7 +35,7 @@ end
 
 function ENT:SetupDataTables()
 	self:NetworkVar("Entity", 0, "Player")
-	self:NetworkVar("Bool", 0, "GrizzlyWarning")
+	self:NetworkVar("Bool", 0, "AlwaysVisible")
 end
 
 function ENT:HandlePlayerDeath()
@@ -53,7 +53,7 @@ function ENT:HandlePlayerDeath()
 	local runData = ply:GetRunData()
 	if IsValid(runData) then
 		runData:HandlePlayerDeath()
-		runData:SetFinalRestingPlace(self:GetPos())
+		runData:SetTombstonePos(self:GetPos())
 		if IsValid(self.lastRunData) then
 			self.lastRunData:Remove()
 		end
@@ -80,10 +80,10 @@ if SERVER then
 	return
 end
 
-local i = 0
-local function aa(wut)
-	DebugInfo(i, tostring(wut))
-	i = i + 1
+local _debugPos = 0
+local function writeDebug(text)
+	DebugInfo(_debugPos, tostring(text))
+	_debugPos = _debugPos + 1
 end
 
 local matCache = {}
@@ -136,7 +136,7 @@ ENT.PortalNormal = vector_up
 ENT.PortalEmitter = nil
 function ENT:Think()
 	-- Debugging
-	i = 0
+	_debugPos = 0
 	-- Particles
 	if self.PortalEmitter then
 		self:HandleParticles()
@@ -172,7 +172,7 @@ function ENT:Think()
 end
 
 function ENT:ShouldDraw()
-	if self.dt.GrizzlyWarning then
+	if self:GetAlwaysVisible() then
 
 		return true
 	end

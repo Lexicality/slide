@@ -28,5 +28,5 @@ ENT.RenderGroup = RENDERGROUP_BOTH
 function ENT:SetupDataTables()
 	self:NetworkVar("Entity", 0, "Player")
 	self:NetworkVar("Bool", 0, "IsTracking")
-	self:NetworkVar("Vector", 0, "FinalRestingPlace")
+	self:NetworkVar("Vector", 0, "TombstonePos")
 end

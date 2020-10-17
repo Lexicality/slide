@@ -104,21 +104,21 @@ local beam = Material("trails/laser")
 function ENT:DrawTranslucent()
 	local npos = #self.positions
 
-	local deathduties = self:GetFinalRestingPlace()
-	local plyPossible = self:GetIsTracking()
+	local deathpos = self:GetTombstonePos()
+	local linkToPlayer = self:GetIsTracking()
 	local plypos
-	if plyPossible then
+	if linkToPlayer then
 		local ply = self:GetPlayer()
 		if IsValid(ply) then
 			plypos = ply:GetPos()
 		end
-	elseif deathduties then
-		plypos = deathduties
-		plyPossible = true
+	elseif deathpos then
+		plypos = deathpos
+		linkToPlayer = true
 	end
 
 	render.SetMaterial(beam)
-	render.StartBeam(npos + (plyPossible and 1 or 0))
+	render.StartBeam(npos + (linkToPlayer and 1 or 0))
 	local pos, last, dist
 	dist = 0
 	for i = 1, npos do
@@ -129,7 +129,7 @@ function ENT:DrawTranslucent()
 		render.AddBeam(pos + vector_up * 4, self.BeamWidth, dist)
 		last = pos
 	end
-	if plyPossible then
+	if linkToPlayer then
 		render.AddBeam(plypos + vector_up * 4, self.BeamWidth, dist)
 	end
 	render.EndBeam()
