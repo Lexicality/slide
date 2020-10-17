@@ -79,28 +79,6 @@ function GM:PlayerInitialSpawn(ply)
 	player_manager.SetPlayerClass(ply, "class_default")
 end
 
-function GM:PlayerSpawn(ply)
-	BaseClass.PlayerSpawn(self, ply)
-
-	ply:CreateRunData()
-end
-
-function GM:DoPlayerDeath(ply, ...)
-	BaseClass.DoPlayerDeath(self, ply, ...)
-
-	local ts = ply:GetTombstone()
-	if IsValid(ts) then
-		ts:HandlePlayerDeath()
-	end
-
-	-- local rd = ply:GetRunData()
-	-- if IsValid(rd) then
-	-- 	rd:HandlePlayerDeath()
-	-- 	-- TEMP
-	-- 	rd:Remove()
-	-- end
-end
-
 function GM:PlayerSilentDeath(ply)
 	BaseClass.PlayerSilentDeath(self, ply)
 

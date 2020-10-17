@@ -38,6 +38,24 @@ function PLAYER:Loadout()
 	self.Player:Give("weapon_pistol")
 end
 
+function PLAYER:Spawn()
+	self.Player:CreateRunData()
+end
+
+function PLAYER:Death(inflicor, attacker)
+	local ts = self.Player:GetTombstone()
+	if IsValid(ts) then
+		ts:HandlePlayerDeath()
+	end
+
+	-- local rd = ply:GetRunData()
+	-- if IsValid(rd) then
+	-- 	rd:HandlePlayerDeath()
+	-- 	-- TEMP
+	-- 	rd:Remove()
+	-- end
+end
+
 player_manager.RegisterClass("class_default", PLAYER, "player_default")
 
 -- local CLASS = {}
