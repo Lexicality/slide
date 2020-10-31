@@ -12,5 +12,5 @@ GM.MapData["slide_shoxx_vs_nitro_f2"] = {
 	FirstPush = {1630},
 	LastBrush = {1938},
 	LastType = "heal",
-	RestartTriggers = {},
+	SpawnTeleTriggers = {},
 }

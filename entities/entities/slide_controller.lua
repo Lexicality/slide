@@ -88,12 +88,14 @@ function ENT:AcceptInput(name, activator, caller, value)
 			gamemode.Call("PlayerCompleteRun", ply)
 		end
 		return true
-	elseif name == "restartrun" then
+	elseif name == "telespawn" then
 		-- Called when a player teleports into a spawn point (theirs or enemies)
-		--  from the completion area
-		-- NOTE: If the restart teleporter puts the player straight into the
-		--  first trigger_push, don't bother calling this!
-		gamemode.Call("PlayerRestartRun", ply)
+		--  from the completion area.
+		local team = tonumber(value)
+		if team ~= TEAM_RED and team ~= TEAM_BLUE then
+			team = nil
+		end
+		gamemode.Call("PlayerTeleSpawn", ply, team)
 		return true
 	elseif name == "debugstartpush" then
 		print("PUSH!", ply, caller, caller:MapCreationID())

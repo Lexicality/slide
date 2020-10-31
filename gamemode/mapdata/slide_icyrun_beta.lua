@@ -3,7 +3,7 @@ GM.MapData["slide_icyrun_beta"] = {
 	FirstPush = {1465},
 	LastBrush = {1596},
 	LastType = "push",
-	RestartTriggers = {1585, 1586, 1626, 1627},
+	SpawnTeleTriggers = {1585, 1586, 1626, 1627},
 	-- Dunno quite what to do about these
 	BonusStart = {1614},
 	BonusEnd = {1585},

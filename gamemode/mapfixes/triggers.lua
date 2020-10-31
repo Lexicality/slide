@@ -80,8 +80,8 @@ function GM:AttachMapTriggers()
 		end
 	end
 
-	for _, ent in ipairs(ents.FindByMagicTarget(mapdata.RestartTriggers)) do
-		ent:AddOutput("OnStartTouch", "slide_map_controller", "RestartRun")
+	for _, ent in ipairs(ents.FindByMagicTarget(mapdata.SpawnTeleTriggers)) do
+		ent:AddOutput("OnStartTouch", "slide_map_controller", "TeleSpawn")
 	end
 end
 

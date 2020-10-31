@@ -158,6 +158,13 @@ function GM:PlayerCompleteRun(ply)
 end
 
 --- @param ply GPlayer
-function GM:PlayerRestartRun(ply)
-	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Started again!")
+--- @param targetTeam number|nil
+function GM:PlayerTeleSpawn(ply, targetTeam)
+	if targetTeam == TEAM_RED then
+		PrintMessage(HUD_PRINTTALK, ply:Name() .. " Teleported to red spawn!")
+	elseif targetTeam == TEAM_BLUE then
+		PrintMessage(HUD_PRINTTALK, ply:Name() .. " Teleported to blue spawn!")
+	else
+		PrintMessage(HUD_PRINTTALK, ply:Name() .. " Teleported to spawn!")
+	end
 end

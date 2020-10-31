@@ -16,5 +16,5 @@ GM.MapData["slide_speedrace_v4_1v1_f3"] =
 		FirstPush = {1700},
 		LastBrush = {1750},
 		LastType = "heal",
-		RestartTriggers = {},
+		SpawnTeleTriggers = {},
 	}

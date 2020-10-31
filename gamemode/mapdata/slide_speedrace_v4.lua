@@ -4,5 +4,5 @@ GM.MapData["slide_speedrace_v4"] = {
 	-- This map never ends
 	LastBrush = {},
 	LastType = "none",
-	RestartTriggers = {},
+	SpawnTeleTriggers = {},
 }

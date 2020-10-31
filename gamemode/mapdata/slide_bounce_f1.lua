@@ -12,5 +12,5 @@ GM.MapData["slide_bounce_f1"] = {
 	FirstPush = {1326},
 	LastBrush = {2258},
 	LastType = "heal",
-	RestartTriggers = {},
+	SpawnTeleTriggers = {},
 }
