@@ -78,9 +78,12 @@ function PLAYER:Death(inflictor, attacker)
 		ts:HandlePlayerDeath()
 	end
 
-	ply:SetRunState(RUN_FAILED)
-	-- TODO: Rundata
-	gamemode.Call("PlayerFailRun", ply, inflictor, attacker)
+	local state = ply:GetRunState()
+	if state == RUN_RUNNING then
+		ply:SetRunState(RUN_FAILED)
+		-- TODO: Rundata
+		gamemode.Call("PlayerFailRun", ply, inflictor, attacker)
+	end
 
 	-- local rd = ply:GetRunData()
 	-- if IsValid(rd) then
