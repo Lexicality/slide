@@ -148,18 +148,39 @@ function GM:MapHealPlayer(ply, amount, healer)
 end
 
 --- @param ply GPlayer
-function GM:PlayerStartRun(ply)
-	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Just started a run!")
+--- @param loops integer
+function GM:PlayerStartRun(ply, loops)
+	if loops == 1 then
+		PrintMessage(HUD_PRINTTALK, ply:Name() .. " Just started a run!")
+	else
+		PrintMessage(
+			HUD_PRINTTALK,
+			ply:Name() .. " Just started their " .. loops .. STNDRD(loops) ..
+				" consecutive run!"
+		)
+	end
 end
 
 --- @param ply GPlayer
-function GM:PlayerLoopRun(ply)
-	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Just completed a loop!")
+function GM:PlayerLoopRun(ply, loops)
+	loops = loops - 1
+	PrintMessage(
+		HUD_PRINTTALK,
+		ply:Name() .. " Just completed their " .. loops .. STNDRD(loops) .. " loop!"
+	)
 end
 
 --- @param ply GPlayer
-function GM:PlayerCompleteRun(ply)
-	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Just finished!")
+function GM:PlayerCompleteRun(ply, loops)
+	if loops == 1 then
+		PrintMessage(HUD_PRINTTALK, ply:Name() .. " Just finished!")
+	else
+		PrintMessage(
+			HUD_PRINTTALK,
+			ply:Name() .. " Just finished their " .. loops .. STNDRD(loops) ..
+				" consecutive run!"
+		)
+	end
 end
 
 --- @param ply GPlayer

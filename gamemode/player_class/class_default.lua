@@ -39,11 +39,13 @@ PLAYER.TeammateNoCollide = false
 
 function PLAYER:SetupDataTables()
 	self.Player:NetworkVar("Int", 0, "RunState")
+	self.Player:NetworkVar("Int", 1, "NumLoops")
 end
 
 -- This will never happen but it's good housekeeping
 function PLAYER:ClassChanged()
 	self.Player:SetRunState(0)
+	self.Player:SetNumLoops(0)
 end
 
 function PLAYER:Init()
@@ -61,6 +63,7 @@ end
 function PLAYER:Spawn()
 	local ply = self.Player
 	ply:SetRunState(RUN_NOT_STARTED)
+	ply:SetNumLoops(0)
 	-- TODO: (not) Rundata
 	ply:CreateRunData()
 end
@@ -104,13 +107,15 @@ function PLAYER:StartRun()
 		return
 	end
 	local state = ply:GetRunState()
+	local numLoops = ply:GetNumLoops() + 1
+	ply:SetNumLoops(numLoops)
 	if state == RUN_RUNNING then
 		-- TODO: Rundata
-		gamemode.Call("PlayerLoopRun", ply)
+		gamemode.Call("PlayerLoopRun", ply, numLoops)
 	else
 		ply:SetRunState(RUN_RUNNING)
 		-- TODO: Rundata
-		gamemode.Call("PlayerStartRun", ply)
+		gamemode.Call("PlayerStartRun", ply, numLoops)
 	end
 end
 
@@ -125,7 +130,7 @@ function PLAYER:CompleteRun()
 	end
 	ply:SetRunState(RUN_COMPLETE)
 	-- TODO: Rundata
-	gamemode.Call("PlayerCompleteRun", ply)
+	gamemode.Call("PlayerCompleteRun", ply, ply:GetNumLoops())
 end
 
 --- @param targetTeam number|nil
