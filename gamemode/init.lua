@@ -153,8 +153,20 @@ function GM:PlayerStartRun(ply)
 end
 
 --- @param ply GPlayer
+function GM:PlayerLoopRun(ply)
+	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Just completed a loop!")
+end
+
+--- @param ply GPlayer
 function GM:PlayerCompleteRun(ply)
 	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Just finished!")
+end
+
+--- @param ply GPlayer
+--- @param inflictor GEntity
+--- @param attacker GEntity
+function GM:PlayerFailRun(ply, inflictor, attacker)
+	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Died :(")
 end
 
 --- @param ply GPlayer

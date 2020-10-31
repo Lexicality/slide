@@ -78,15 +78,13 @@ function ENT:AcceptInput(name, activator, caller, value)
 		return true
 	elseif name == "startrun" then
 		-- Ideally called by the first trigger_push
-		gamemode.Call("PlayerStartRun", ply)
+		player_manager.RunClass(ply, "StartRun")
 		return true
 	elseif name == "completerun" then
 		-- Ideally called by a trigger_hurt in the complete area (or a
 		--  teleporter) but can be called by `OnEndTouch` of the last
 		--  trigger_push in dire circumstances
-		if ply:Alive() then
-			gamemode.Call("PlayerCompleteRun", ply)
-		end
+		player_manager.RunClass(ply, "CompleteRun")
 		return true
 	elseif name == "telespawn" then
 		-- Called when a player teleports into a spawn point (theirs or enemies)
@@ -95,7 +93,7 @@ function ENT:AcceptInput(name, activator, caller, value)
 		if team ~= TEAM_RED and team ~= TEAM_BLUE then
 			team = nil
 		end
-		gamemode.Call("PlayerTeleSpawn", ply, team)
+		player_manager.RunClass(ply, "TeleSpawn", team)
 		return true
 	elseif name == "debugstartpush" then
 		print("PUSH!", ply, caller, caller:MapCreationID())

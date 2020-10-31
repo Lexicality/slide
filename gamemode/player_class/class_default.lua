@@ -18,6 +18,11 @@
 DEFINE_BASECLASS "player_default"
 AddCSLuaFile()
 
+RUN_NOT_STARTED = 0
+RUN_RUNNING = 1
+RUN_COMPLETE = 2
+RUN_FAILED = 3
+
 --- @type GPlayerClass
 local PLAYER = {}
 
@@ -32,6 +37,15 @@ PLAYER.DuckSpeed = 0.3 -- How fast to go from not ducking, to ducking
 PLAYER.UnDuckSpeed = 0.3 -- How fast to go from ducking, to not ducking
 PLAYER.TeammateNoCollide = false
 
+function PLAYER:SetupDataTables()
+	self.Player:NetworkVar("Int", 0, "RunState")
+end
+
+-- This will never happen but it's good housekeeping
+function PLAYER:ClassChanged()
+	self.Player:SetRunState(0)
+end
+
 function PLAYER:Loadout()
 	self.Player:RemoveAllAmmo()
 
@@ -40,7 +54,10 @@ function PLAYER:Loadout()
 end
 
 function PLAYER:Spawn()
-	self.Player:CreateRunData()
+	local ply = self.Player
+	ply:SetRunState(RUN_NOT_STARTED)
+	-- TODO: (not) Rundata
+	ply:CreateRunData()
 end
 
 --- @param inflictor GEntity
@@ -52,6 +69,10 @@ function PLAYER:Death(inflictor, attacker)
 	if IsValid(ts) then
 		ts:HandlePlayerDeath()
 	end
+
+	ply:SetRunState(RUN_FAILED)
+	-- TODO: Rundata
+	gamemode.Call("PlayerFailRun", ply, inflictor, attacker)
 
 	-- local rd = ply:GetRunData()
 	-- if IsValid(rd) then
@@ -70,6 +91,51 @@ function PLAYER:MapHeal(amount, healer)
 	end
 	ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + amount))
 	gamemode.Call("MapHealPlayer", ply, amount, healer)
+end
+
+function PLAYER:StartRun()
+	local ply = self.Player
+	if not ply:Alive() then
+		return
+	end
+	local state = ply:GetRunState()
+	if state == RUN_RUNNING then
+		-- TODO: Rundata
+		gamemode.Call("PlayerLoopRun", ply)
+	else
+		ply:SetRunState(RUN_RUNNING)
+		-- TODO: Rundata
+		gamemode.Call("PlayerStartRun", ply)
+	end
+end
+
+function PLAYER:CompleteRun()
+	local ply = self.Player
+	if not ply:Alive() then
+		return
+	end
+	local state = ply:GetRunState()
+	if state ~= RUN_RUNNING then
+		return
+	end
+	ply:SetRunState(RUN_COMPLETE)
+	-- TODO: Rundata
+	gamemode.Call("PlayerCompleteRun", ply)
+end
+
+--- @param targetTeam number|nil
+function PLAYER:TeleSpawn(targetTeam)
+	local ply = self.Player
+	if not ply:Alive() then
+		return
+	end
+	local state = ply:GetRunState()
+	if state == RUN_NOT_STARTED then
+		return
+	end
+	ply:SetRunState(RUN_NOT_STARTED)
+	-- TODO: Rundata
+	gamemode.Call("PlayerTeleSpawn", ply, targetTeam)
 end
 
 player_manager.RegisterClass("class_default", PLAYER, "player_default")
