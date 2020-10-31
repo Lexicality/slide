@@ -18,6 +18,7 @@
 DEFINE_BASECLASS "player_default"
 AddCSLuaFile()
 
+--- @type GPlayerClass
 local PLAYER = {}
 
 --
@@ -42,8 +43,12 @@ function PLAYER:Spawn()
 	self.Player:CreateRunData()
 end
 
-function PLAYER:Death(inflicor, attacker)
-	local ts = self.Player:GetTombstone()
+--- @param inflictor GEntity
+--- @param attacker GEntity
+function PLAYER:Death(inflictor, attacker)
+	local ply = self.Player
+
+	local ts = ply:GetTombstone()
 	if IsValid(ts) then
 		ts:HandlePlayerDeath()
 	end
@@ -57,31 +62,3 @@ function PLAYER:Death(inflicor, attacker)
 end
 
 player_manager.RegisterClass("class_default", PLAYER, "player_default")
-
--- local CLASS = {}
-
--- function CLASS:Loadout(pl)
--- 	pl:Give("weapon_knife")
--- 	if (pl:Team() == TEAM_RED) then
--- 		pl:Give("weapon_real_cs_glock18")
--- 	else
--- 		pl:Give("weapon_real_cs_usp")
--- 	end
--- end
-
--- function CLASS:OnSpawn(pl)
-
--- 	if (IsValid(pl.m_entTrail)) then
--- 		pl.m_entTrail:Remove()
--- 	end
-
--- 	local AttachmentID = 0
-
--- 	local col = team.GetColor(pl:Team())
-
--- 	pl.m_entTrail = util.SpriteTrail(pl, AttachmentID, col, true, 48, 4, 2, 0, "trails/plasma.vmt")
--- 	pl.m_entTrail:SetParent(pl)
-
--- end
-
--- player_class.Register("Default", CLASS)

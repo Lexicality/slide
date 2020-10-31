@@ -17,6 +17,7 @@
 ]] --
 DEFINE_BASECLASS "gamemode_base"
 
+--- @type GPlayer
 local PLY = FindMetaTable("Player")
 
 function PLY:GetTombstone()
