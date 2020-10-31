@@ -28,7 +28,47 @@ if CLIENT then
 	return
 end
 
+local ENT_OUTPUT_HOOKS = {
+	"PlayerSpawn",
+	"PlayerStartRun",
+	"PlayerLoopRun",
+	"PlayerCompleteRun",
+	"PlayerTeleSpawn",
+}
 function ENT:Initialize()
+	BaseClass.Initialize(self)
+
+	for _, hookName in ipairs(ENT_OUTPUT_HOOKS) do
+		hook.Add(
+			hookName, self, function(self, ply, param)
+				self:TriggerOutput("On" .. hookName, ply, param)
+			end
+		)
+	end
+	hook.Add("PlayerFailRun", self, self.OnPlayerFailRun)
+
+end
+
+--- @param ply GPlayer
+--- @param inflictor GEntity
+--- @param attacker GEntity
+function ENT:OnPlayerFailRun(ply, inflictor, attacker)
+	local cause = attacker
+	if cause == ply then
+		cause = inflictor
+	end
+	local param = nil
+	if IsValid(cause) then
+		if cause:IsPlayer() then
+			param = cause:SteamID()
+		else
+			param = cause:GetName()
+		end
+	end
+	if param == "" then
+		param = nil
+	end
+	self:TriggerOutput("OnPlayerFailRun", ply, nil)
 end
 
 --- @param key string
@@ -125,7 +165,10 @@ function ENT:StoreOutput(name, ...)
 	return BaseClass.StoreOutput(self, name, ...)
 end
 
-function ENT:TriggerOutput(name, ...)
+--- @param name string
+--- @param activator GEntity
+--- @param data string|nil
+function ENT:TriggerOutput(name, activator, data)
 	name = string.lower(name)
-	return BaseClass.TriggerOutput(self, name, ...)
+	return BaseClass.TriggerOutput(self, name, activator, data)
 end

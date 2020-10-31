@@ -46,6 +46,11 @@ function PLAYER:ClassChanged()
 	self.Player:SetRunState(0)
 end
 
+function PLAYER:Init()
+	-- Make it so we can target the player with hammer I/O
+	self.Player:SetKeyValue("targetname", self.Player:SteamID())
+end
+
 function PLAYER:Loadout()
 	self.Player:RemoveAllAmmo()
 
