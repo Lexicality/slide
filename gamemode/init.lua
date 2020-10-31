@@ -136,9 +136,15 @@ end
 
 --- @param ply GPlayer
 --- @param amount number
---- @param ent GEntity
-function GM:MapHealPlayer(ply, amount, ent)
-	ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + amount))
+--- @param healer GEntity
+function GM:PlayerCanMapHeal(ply, amount, healer)
+	return true
+end
+
+--- @param ply GPlayer
+--- @param amount number
+--- @param healer GEntity
+function GM:MapHealPlayer(ply, amount, healer)
 end
 
 --- @param ply GPlayer

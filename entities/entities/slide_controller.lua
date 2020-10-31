@@ -74,7 +74,7 @@ function ENT:AcceptInput(name, activator, caller, value)
 		end
 		print("Healed!", ply, caller, caller:MapCreationID())
 
-		gamemode.Call("MapHealPlayer", ply, healAmount, caller)
+		player_manager.RunClass(ply, "MapHeal", healAmount, caller)
 		return true
 	elseif name == "startrun" then
 		-- Ideally called by the first trigger_push

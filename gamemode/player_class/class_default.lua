@@ -61,4 +61,15 @@ function PLAYER:Death(inflictor, attacker)
 	-- end
 end
 
+--- @param amount integer
+--- @param healer GEntity
+function PLAYER:MapHeal(amount, healer)
+	local ply = self.Player
+	if gamemode.Call("PlayerCanMapHeal", ply, amount, healer) == false then
+		return
+	end
+	ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + amount))
+	gamemode.Call("MapHealPlayer", ply, amount, healer)
+end
+
 player_manager.RegisterClass("class_default", PLAYER, "player_default")
