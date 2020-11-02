@@ -20,13 +20,12 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Spawnable = false
-ENT.PrintName = "Tombstone"
-ENT.Purpose = "Celebrating and marking a player's clumsy death"
+ENT.PrintName = "RunData"
+ENT.Purpose = "Keeping track of how people move through the map"
 ENT.Author = "Lexi"
 ENT.RenderGroup = RENDERGROUP_BOTH
 
 function ENT:SetupDataTables()
 	self:NetworkVar("Entity", 0, "Player")
 	self:NetworkVar("Bool", 0, "IsTracking")
-	self:NetworkVar("Vector", 0, "TombstonePos")
 end

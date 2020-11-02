@@ -28,7 +28,7 @@ function ENT:Initialize()
 	self.positions = {}
 end
 
-function ENT:SetupOwner(ply)
+function ENT:Setup(ply)
 	self:SetPos(ply:GetPos())
 	self:SetParent(ply)
 	ply:DeleteOnRemove(self)
@@ -36,21 +36,16 @@ function ENT:SetupOwner(ply)
 	self:SetIsTracking(true)
 end
 
-function ENT:HandlePlayerDeath()
-	self:SetIsTracking(false)
-	self:SetParent(NULL)
-end
-
 function ENT:GetData()
 	return self.positions
 end
 
 function ENT:Think()
-	if not self:GetIsTracking() then
+	local ply = self:GetPlayer()
+	if not (self:GetIsTracking() and IsValid(ply)) then
 		return
 	end
 
-	local ply = self:GetPlayer()
 	self.positions[#self.positions + 1] = {
 		ctime = CurTime(),
 		rtime = RealTime(),

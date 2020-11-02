@@ -24,7 +24,6 @@ include("shared.lua")
 include("utils.lua")
 
 include("meta_entity.lua")
-include("meta_ply.lua")
 
 GM.MapData = {}
 

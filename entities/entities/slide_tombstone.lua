@@ -38,11 +38,14 @@ function ENT:SetupDataTables()
 	self:NetworkVar("Bool", 0, "AlwaysVisible")
 end
 
-function ENT:HandlePlayerDeath()
-	local ply = self:GetPlayer()
-	if not IsValid(ply) then
-		error("Player is invalid!", 2)
-	end
+--- @param ply GPlayer
+--- @param runData GEntity
+function ENT:Setup(ply, runData)
+	self:SetPlayer(ply)
+
+	-- TODO: Do we want to just sorta leave these around?
+	ply:DeleteOnRemove(self)
+
 	local pos = ply:GetPos()
 	local obb = self:OBBMaxs()
 	pos.z = pos.z + obb.z
@@ -50,15 +53,14 @@ function ENT:HandlePlayerDeath()
 	local ang = ply:GetAngles()
 	self:SetAngles(Angle(0, -ang.yaw, 0))
 
-	local runData = ply:GetRunData()
-	if IsValid(runData) then
-		runData:HandlePlayerDeath()
-		runData:SetTombstonePos(self:GetPos())
-		if IsValid(self.lastRunData) then
-			self.lastRunData:Remove()
-		end
-		self.lastRunData = runData
+	if not IsValid(runData) then
+		return
 	end
+
+	runData:SetIsTracking(false)
+	ply:DontDeleteOnRemove(runData)
+	self:DeleteOnRemove(runData)
+	runData:SetParent(self)
 end
 
 -- function ENT:UpdateTransmitState()
