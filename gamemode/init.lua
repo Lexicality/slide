@@ -82,12 +82,7 @@ end
 function GM:PlayerSilentDeath(ply)
 	BaseClass.PlayerSilentDeath(self, ply)
 
-	local rd = ply:GetRunData()
-	if IsValid(rd) then
-		rd:HandlePlayerDeath()
-		-- TODO: Do we want to keep rundata that results in a Lua based death? Presumably not
-		-- rd:Remove()
-	end
+	player_manager.RunClass(ply, "DeathSilent")
 end
 
 function GM:Think()
@@ -188,6 +183,11 @@ end
 --- @param attacker GEntity
 function GM:PlayerFailRun(ply, inflictor, attacker)
 	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Died :(")
+end
+
+--- @param ply GPlayer
+function GM:PlayerAbortRun(ply)
+	PrintMessage(HUD_PRINTTALK, ply:Name() .. " Gave up!")
 end
 
 --- @param ply GPlayer

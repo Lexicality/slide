@@ -31,6 +31,7 @@ end
 local ENT_OUTPUT_HOOKS = {
 	"PlayerSpawn",
 	"PlayerStartRun",
+	"PlayerAbortRun",
 	"PlayerLoopRun",
 	"PlayerCompleteRun",
 	"PlayerTeleSpawn",

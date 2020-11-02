@@ -22,6 +22,7 @@ RUN_NOT_STARTED = 0
 RUN_RUNNING = 1
 RUN_COMPLETE = 2
 RUN_FAILED = 3
+RUN_ABORTED = 4
 
 --- @type GPlayerClass
 local PLAYER = {}
@@ -93,6 +94,24 @@ function PLAYER:Death(inflictor, attacker)
 	-- end
 end
 
+function PLAYER:DeathSilent()
+	local ply = self.Player
+
+	local rd = ply:GetRunData()
+	if IsValid(rd) then
+		rd:HandlePlayerDeath()
+		-- TODO: Do we want to keep rundata that results in a Lua based death? Presumably not
+		-- rd:Remove()
+	end
+
+	local state = ply:GetRunState()
+	if state == RUN_RUNNING then
+		ply:SetRunState(RUN_ABORTED)
+		-- TODO: Rundata
+		gamemode.Call("PlayerAbortRun", ply)
+	end
+end
+
 --- @param amount integer
 --- @param healer GEntity
 function PLAYER:MapHeal(amount, healer)
@@ -145,6 +164,14 @@ function PLAYER:TeleSpawn(targetTeam)
 	local state = ply:GetRunState()
 	if state == RUN_NOT_STARTED then
 		return
+	end
+	-- If the player has an active run, abort it before we continue
+	if state == RUN_RUNNING then
+		ply:SetRunState(RUN_ABORTED)
+		-- This loop didn't count
+		ply:SetNumLoops(math.max(ply:GetNumLoops() - 1, 0))
+		-- TODO: Rundata
+		gamemode.Call("PlayerAbortRun", ply)
 	end
 	ply:SetRunState(RUN_NOT_STARTED)
 	-- TODO: Rundata
